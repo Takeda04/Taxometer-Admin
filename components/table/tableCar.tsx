@@ -92,10 +92,10 @@ export const TableCarWrapper = () => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onClick={onClose}>
+                <Button aria-label="button" color="danger" variant="flat" onClick={onClose}>
                   Yopish
                 </Button>
-                <Button color="primary" variant="flat" onClick={handleUpdate}>
+                <Button aria-label="button"  color="primary" variant="flat" onClick={handleUpdate}>
                   Yangilash
                 </Button>
               </ModalFooter>
@@ -111,10 +111,10 @@ export const TableCarWrapper = () => {
                 <p>Rostan ham <b>{selectedCar?.typeCar}</b> ni {"o'chirishni hohlaysizmi?"}</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant="flat" onClick={onClose}>
+                <Button aria-label="button"  color="primary" variant="flat" onClick={onClose}>
                   Yopish
                 </Button>
-                <Button color="danger" variant="flat" onClick={() => handleDelete(selectedCar?.id)}>
+                <Button  aria-label="button" color="danger" variant="flat" onClick={() => handleDelete(selectedCar?.id)}>
                   {"O'chirish"}
                 </Button>
               </ModalFooter>

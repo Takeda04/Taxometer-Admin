@@ -57,21 +57,21 @@ export const RenderCell = ({  user, columnKey, openModal }: Props) => {
         <div className="flex items-center gap-4">
           <div>
             <Tooltip content="Details">
-              <button onClick={() => openModal("show", user)}>
+              <button  aria-label="button" onClick={() => openModal("show", user)}>
                 <EyeIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => openModal("update", user)}>
+              <button  aria-label="button" onClick={() => openModal("update", user)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Delete user" color="danger">
-              <button onClick={() => openModal("delete", user)}>
+              <button  aria-label="button" onClick={() => openModal("delete", user)}>
                 <DeleteIcon size={20} fill="#FF0080" />
               </button>
             </Tooltip>

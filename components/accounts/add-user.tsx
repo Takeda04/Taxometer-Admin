@@ -131,10 +131,10 @@ export const AddUser = () => {
             </Select>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" onClick={onClose}>
+            <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
               Yopish
             </Button>
-            <Button color="primary" variant="flat" onClick={handleTasdiqlash}>
+            <Button aria-label="button"  color="primary" variant="flat" onClick={handleTasdiqlash}>
               Tasdiqlash
             </Button>
           </ModalFooter>

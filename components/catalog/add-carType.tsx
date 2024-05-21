@@ -44,6 +44,7 @@ export const AddCardtype = () => {
   return (
     <div>
       <Button
+       aria-label="button" 
         onClick={onOpen}
         color="primary"
         variant="bordered"
@@ -66,10 +67,10 @@ export const AddCardtype = () => {
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" onClick={onClose}>
+            <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
               Yopish
             </Button>
-            <Button color="primary" variant="flat" onClick={handleCreate}>
+            <Button aria-label="button"  color="primary" variant="flat" onClick={handleCreate}>
               Tasdiqlash
             </Button>
           </ModalFooter>

@@ -27,14 +27,14 @@ export const RenderCarCell = ({ car, columnKey, openModal }: Props) => {
         <div className="flex items-center gap-4 ">
           <div>
             <Tooltip content="Edit tarif" color="secondary">
-              <button onClick={() => openModal("update", car)}>
+              <button  aria-label="button" onClick={() => openModal("update", car)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Delete tarif" color="danger">
-              <button onClick={() => openModal("delete", car)}>
+              <button aria-label="button"  onClick={() => openModal("delete", car)}>
                 <DeleteIcon size={20} fill="#FF0080" />
               </button>
             </Tooltip>

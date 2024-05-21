@@ -42,7 +42,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             setPassword(e.target.value)
           }
         />
-        <Button type="submit" style={{ marginTop: "1rem" }}>
+        <Button  aria-label="button"  type="submit" style={{ marginTop: "1rem" }}>
           Login
         </Button>
       </form>

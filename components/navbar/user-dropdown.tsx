@@ -16,7 +16,7 @@ export const UserDropdown = () => {
     <Dropdown>
       <NavbarItem>
         <DropdownTrigger>
-          <Button color="primary">
+          <Button aria-label="button"  color="primary">
             Parameterlar
           </Button>
         </DropdownTrigger>

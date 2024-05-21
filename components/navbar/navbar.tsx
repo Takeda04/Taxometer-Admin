@@ -19,7 +19,7 @@ export const NavbarWrapper = ({ children }: Props) => {
         }}
       >
         <NavbarContent className="md:hidden">
-          <BurguerButton />
+          <BurguerButton  aria-label="button" />
         </NavbarContent>
         <NavbarContent className="w-full max-md:hidden">
           <Input

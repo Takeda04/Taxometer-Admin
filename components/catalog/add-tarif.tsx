@@ -48,6 +48,7 @@ export const AddTarif = () => {
   return (
     <div>
       <Button
+       aria-label="button" 
         onClick={onOpen}
         color="primary"
         variant="bordered"
@@ -78,10 +79,10 @@ export const AddTarif = () => {
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" onClick={onClose}>
+            <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
               Yopish
             </Button>
-            <Button color="primary" variant="flat" onClick={handleContinue}>
+            <Button aria-label="button"  color="primary" variant="flat" onClick={handleContinue}>
               Tasdiqlash
             </Button>
           </ModalFooter>
