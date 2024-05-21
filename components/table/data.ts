@@ -12,7 +12,6 @@ export const columnsTarif = [
  ];
 
  export const columnsCar = [
-  { name: "Avtomobil brandi", uid: "brand" },
   { name: "Avtomobil turi", uid: "typeCar" },
   { name: "ACTIONS", uid: "actions" },
 ];
@@ -95,17 +94,14 @@ export const users = [
  export const cars = [
   {
     id: 1,
-    brand: "Kia",
     typeCar: "Kia K5",
   },
   {
     id: 2,
-    brand: "Chevrolet",
     typeCar: "Malibu",
   },
   {
     id: 3,
-    brand: "Nissan",
     typeCar: "Altima",
   },
 ];

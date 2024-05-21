@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Button,
   Input,
@@ -10,19 +11,49 @@ import {
   useDisclosure,
   SelectItem,
 } from "@nextui-org/react";
-import React from "react";
 import { UsersIcon } from "../icons/breadcrumb/users-icon";
+import { toastError, toastLoading, toastSuccess } from "../toast";
 
 export const AddUser = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phoneNumber: "",
+    carNumber: "",
+    licensePlate: "",
+    carType: "",
+    tarif: "",
+  });
 
-  const carType = [
+  const catchChange = (event: { target: { name: any; value: any; }; }) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleTasdiqlash = async (e: { preventDefault: () => void; }) => {
+    const toastId = toastLoading("Loading...")
+    e.preventDefault();
+    try {
+      console.log(formData);
+      toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi", toastId);
+    } catch (error) {
+      toastError("error", toastId);
+    }finally{
+      onClose()
+    }
+  };
+
+  const carTypes = [
     { car: "Chevrolet", value: "chevrolet" },
     { car: "Nissan", value: "nissan" },
     { car: "Kia", value: "kia" },
   ];
 
-  const tarif = [
+  const tarifOptions = [
     { tarif: "START", value: "start" },
     { tarif: "EKONOM", value: "ekonom" },
     { tarif: "COMFORT", value: "comfort" },
@@ -34,7 +65,7 @@ export const AddUser = () => {
   return (
     <div>
       <Button
-        onPress={onOpen}
+        onClick={onOpen}
         color="primary"
         variant="bordered"
         startContent={<UsersIcon />}
@@ -42,45 +73,71 @@ export const AddUser = () => {
       >
         {"Haydovchi Qo'shish"}
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {"Haydovchi Qo'shish"}
-              </ModalHeader>
-              <ModalBody>
-                <Input label="Ism" variant="bordered" />
-                <Input label="Familiya" variant="bordered" />
-                <Input label="Otasining ismi" variant="bordered" />
-                <Input label="Telefon raqami" variant="bordered" />
-                <Input label="Moshina raqami" variant="bordered" />
-                <Input label="Haydovchilik guvohnoma" variant="bordered" />
-                <Select label="Moshina turi">
-                  {carType.map(({ car, value }) => (
-                    <SelectItem key={value} value={value}>
-                      {car}
-                    </SelectItem>
-                  ))}
-                </Select>
-                <Select label="Tarif">
-                  {tarif.map(({ tarif, value }) => (
-                    <SelectItem key={value} value={value}>
-                      {tarif}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onClick={onClose}>
-                  Yopish
-                </Button>
-                <Button color="primary" variant="flat" onPress={onClose}>
-                  Tasdiqlash
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+          <ModalHeader>{"Haydovchi Qo'shish"}</ModalHeader>
+          <ModalBody>
+            <Input
+              name="fullName"
+              label="F.I.O"
+              variant="bordered"
+              value={formData.fullName}
+              onChange={catchChange}
+            />
+            <Input
+              name="phoneNumber"
+              label="Telefon raqami"
+              variant="bordered"
+              value={formData.phoneNumber}
+              onChange={catchChange}
+            />
+            <Input
+              name="carNumber"
+              label="Moshina raqami"
+              variant="bordered"
+              value={formData.carNumber}
+              onChange={catchChange}
+            />
+            <Input
+              name="licensePlate"
+              label="Haydovchilik guvohnoma"
+              variant="bordered"
+              value={formData.licensePlate}
+              onChange={catchChange}
+            />
+            <Select
+              name="carType"
+              label="Moshina turi"
+              value={formData.carType}
+              onChange={catchChange}
+            >
+              {carTypes.map(({ car, value }) => (
+                <SelectItem key={value} value={value}>
+                  {car}
+                </SelectItem>
+              ))}
+            </Select>
+            <Select
+              name="tarif"
+              label="Tarif"
+              value={formData.tarif}
+              onChange={catchChange}
+            >
+              {tarifOptions.map(({ tarif, value }) => (
+                <SelectItem key={value} value={value}>
+                  {tarif}
+                </SelectItem>
+              ))}
+            </Select>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="flat" onClick={onClose}>
+              Yopish
+            </Button>
+            <Button color="primary" variant="flat" onClick={handleTasdiqlash}>
+              Tasdiqlash
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>

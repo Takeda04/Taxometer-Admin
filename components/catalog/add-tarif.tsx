@@ -1,59 +1,92 @@
+import React, { useState } from "react";
 import {
-    Button,
-    Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    useDisclosure,
-  } from "@nextui-org/react";
-  import React from "react";
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import { BalanceIcon } from "../icons/sidebar/balance-icon";
-  
-  export const AddTarif = () => {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+import { toastError, toastLoading, toastSuccess } from "../toast";
 
-    return (
-      <div>
-        <>
-          <Button
-            onPress={onOpen}
-            color="primary"
-            variant="bordered"
-            startContent={<BalanceIcon />}
-          >
-            {"Tarif yaratish"}
-          </Button>
-          <Modal
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            placement="top-center"
-          >
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">
-                    {"Ta'rif Yaratish"}
-                  </ModalHeader>
-                  <ModalBody>
-                    <Input label="Tarif nomi" variant="bordered" />
-                    <Input label="Narxi" variant="bordered" type="number"/>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" variant="flat" onClick={onClose}>
-                      Yopish
-                    </Button>
-                    <Button color="primary" variant="flat" onPress={onClose}>
-                      Tasdiqlash
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-        </>
-      </div>
-    );
+export const AddTarif = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+  });
+
+  const catchChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
-  
+
+  const handleContinue = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const toastId = toastLoading("Loading...");
+
+    try {
+      if (formData.name !== "" && formData.price !== "") {
+        toastSuccess("Muaffaqiyatli yaratildi", toastId);
+        console.log(formData);
+      } else {
+        throw new Error("Ma'lumotlar to'liq emas");
+      }
+    } catch (error) {
+      toastError(error.message, toastId);
+    } finally {
+      onClose();
+    }
+  };
+
+  return (
+    <div>
+      <Button
+        onClick={onOpen}
+        color="primary"
+        variant="bordered"
+        startContent={<BalanceIcon />}
+      >
+        {"Tarif yaratish"}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
+        <ModalContent>
+          <ModalHeader className="flex flex-col gap-1">
+            {"Ta'rif Yaratish"}
+          </ModalHeader>
+          <ModalBody>
+            <Input
+              name="name"
+              label="Tarif nomi"
+              variant="bordered"
+              value={formData.name}
+              onChange={catchChange}
+            />
+            <Input
+              name="price"
+              label="Narxi"
+              variant="bordered"
+              type="number"
+              value={formData.price}
+              onChange={catchChange}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="flat" onClick={onClose}>
+              Yopish
+            </Button>
+            <Button color="primary" variant="flat" onClick={handleContinue}>
+              Tasdiqlash
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </div>
+  );
+};

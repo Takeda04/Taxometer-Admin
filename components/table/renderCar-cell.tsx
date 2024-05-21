@@ -1,8 +1,7 @@
-import { User, Tooltip, Chip } from "@nextui-org/react";
+import { Tooltip, Chip } from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
-import { EyeIcon } from "../icons/table/eye-icon";
 import { cars } from "./data";
 
 interface Props {
@@ -14,14 +13,6 @@ export const RenderCarCell = ({ car, columnKey }: Props) => {
   // @ts-ignore
   const cellValue = car[columnKey];
   switch (columnKey) {
-    case "brand":
-      return (
-        <div>
-          <div>
-            <span>{cellValue}</span>
-          </div>
-        </div>
-      );
     case "carType":
       return (
         <div>
@@ -41,11 +32,7 @@ export const RenderCarCell = ({ car, columnKey }: Props) => {
             </Tooltip>
           </div>
           <div>
-            <Tooltip
-              content="Delete tarif"
-              color="danger"
-              
-            >
+            <Tooltip content="Delete tarif" color="danger">
               <button onClick={() => console.log("Delete tarif", car.id)}>
                 <DeleteIcon size={20} fill="#FF0080" />
               </button>

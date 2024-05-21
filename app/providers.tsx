@@ -5,6 +5,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Layout } from "../components/layout/layout";
 import { Login } from "./auth";
+import { Toaster } from "react-hot-toast";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -29,6 +30,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   if (true) {
     return (
       <NextUIProvider>
+        <Toaster reverseOrder={true}/>
         <NextThemesProvider
           defaultTheme="system"
           attribute="class"
