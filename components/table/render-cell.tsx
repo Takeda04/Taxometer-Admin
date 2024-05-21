@@ -18,11 +18,11 @@ export const RenderCell = ({ user, columnKey }: Props) => {
       return (
         <User
           avatarProps={{
-            src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+            src: user.avatar,
           }}
           name={cellValue}
         >
-          {user.email}
+          {user.name}
         </User>
       );
     case "role":
@@ -30,9 +30,6 @@ export const RenderCell = ({ user, columnKey }: Props) => {
         <div>
           <div>
             <span>{cellValue}</span>
-          </div>
-          <div>
-            <span>{user.team}</span>
           </div>
         </div>
       );
@@ -58,14 +55,14 @@ export const RenderCell = ({ user, columnKey }: Props) => {
         <div className="flex items-center gap-4 ">
           <div>
             <Tooltip content="Details">
-              <button onClick={() => console.log("View user", user.id)}>
+              <button onClick={() => console.log("View user", user)}>
                 <EyeIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => console.log("Edit user", user.id)}>
+              <button onClick={() => console.log("Edit user", user)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>

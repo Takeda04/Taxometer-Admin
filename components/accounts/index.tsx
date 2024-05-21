@@ -47,8 +47,8 @@ export const Accounts = () => {
         </div>
         <div className="flex flex-row gap-3.5 flex-wrap">
           <AddUser />
-          <Button color="primary" startContent={<ExportIcon />}>
-            Export to CSV
+          <Button color="primary" variant="bordered" startContent={<ExportIcon />}>
+            Excel faylni yuklash
           </Button>
         </div>
       </div>

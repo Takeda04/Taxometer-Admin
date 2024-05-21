@@ -1,7 +1,5 @@
 import React from "react";
 import { Sidebar } from "./sidebar.styles";
-import { Avatar, Tooltip } from "@nextui-org/react";
-import { CompaniesDropdown } from "./companies-dropdown";
 import { HomeIcon } from "../icons/sidebar/home-icon";
 import { PaymentsIcon } from "../icons/sidebar/payments-icon";
 import { BalanceIcon } from "../icons/sidebar/balance-icon";
@@ -42,33 +40,20 @@ export const SidebarWrapper = () => {
               isActive={pathname === "/"}
               href="/"
             />
-            <SidebarMenu title="Main Menu">
+
               <SidebarItem
                 isActive={pathname === "/accounts"}
                 title="Accounts"
                 icon={<AccountsIcon />}
                 href="accounts"
               />
-
-            </SidebarMenu>
-          </div>
-          <div className={Sidebar.Footer()}>
-            <Tooltip content={"Settings"} color="primary">
-              <div className="max-w-fit">
-                <SettingsIcon />
-              </div>
-            </Tooltip>
-            <Tooltip content={"Adjustments"} color="primary">
-              <div className="max-w-fit">
-                <FilterIcon />
-              </div>
-            </Tooltip>
-            <Tooltip content={"Profile"} color="primary">
-              <Avatar
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                size="sm"
+              <SidebarItem
+              isActive={pathname === "/catalog"}
+              title="Katalog"
+              icon={<ViewIcon />}
+              href="catalog"
               />
-            </Tooltip>
+
           </div>
         </div>
       </div>
