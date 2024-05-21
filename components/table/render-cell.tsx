@@ -1,4 +1,4 @@
-import { User, Tooltip, Chip } from "@nextui-org/react";
+import { User, Tooltip, Chip, useDisclosure } from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
@@ -8,11 +8,13 @@ import { users } from "./data";
 interface Props {
   user: (typeof users)[number];
   columnKey: string | React.Key;
+  openModal: (type: string, user: (typeof users)[number]) => void
 }
 
-export const RenderCell = ({ user, columnKey }: Props) => {
+export const RenderCell = ({  user, columnKey, openModal }: Props) => {
   // @ts-ignore
   const cellValue = user[columnKey];
+
   switch (columnKey) {
     case "name":
       return (
@@ -52,28 +54,24 @@ export const RenderCell = ({ user, columnKey }: Props) => {
 
     case "actions":
       return (
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-4">
           <div>
             <Tooltip content="Details">
-              <button onClick={() => console.log("View user", user)}>
+              <button onClick={() => openModal("show", user)}>
                 <EyeIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => console.log("Edit user", user)}>
+              <button onClick={() => openModal("update", user)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
-            <Tooltip
-              content="Delete user"
-              color="danger"
-              onClick={() => console.log("Delete user", user.id)}
-            >
-              <button>
+            <Tooltip content="Delete user" color="danger">
+              <button onClick={() => openModal("delete", user)}>
                 <DeleteIcon size={20} fill="#FF0080" />
               </button>
             </Tooltip>

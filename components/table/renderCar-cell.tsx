@@ -7,9 +7,10 @@ import { cars } from "./data";
 interface Props {
   car: (typeof cars)[number];
   columnKey: string | React.Key;
+  openModal: (type: string, user: (typeof cars)[number]) => void;
 }
 
-export const RenderCarCell = ({ car, columnKey }: Props) => {
+export const RenderCarCell = ({ car, columnKey, openModal }: Props) => {
   // @ts-ignore
   const cellValue = car[columnKey];
   switch (columnKey) {
@@ -26,14 +27,14 @@ export const RenderCarCell = ({ car, columnKey }: Props) => {
         <div className="flex items-center gap-4 ">
           <div>
             <Tooltip content="Edit tarif" color="secondary">
-              <button onClick={() => console.log("Edit tarif", car)}>
+              <button onClick={() => openModal("update", car)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Delete tarif" color="danger">
-              <button onClick={() => console.log("Delete tarif", car.id)}>
+              <button onClick={() => openModal("delete", car)}>
                 <DeleteIcon size={20} fill="#FF0080" />
               </button>
             </Tooltip>
