@@ -1,9 +1,10 @@
 "use client";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Layout } from "../components/layout/layout";
+import { Login } from "./auth";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -11,13 +12,33 @@ export interface ProvidersProps {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
-  return (
-    <NextUIProvider>
-      <NextThemesProvider defaultTheme="system" attribute="class" {...themeProps}>
-        <Layout>
-          {children}
-        </Layout>
-      </NextThemesProvider>
-    </NextUIProvider>
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogin = (accessToken: string | null) => {
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+      setIsAuthenticated(true);
+    }
+  };
+
+  if (true) {
+    return (
+      <NextUIProvider>
+        <NextThemesProvider
+          defaultTheme="system"
+          attribute="class"
+          {...themeProps}
+        >
+          <Layout>{children}</Layout>
+        </NextThemesProvider>
+      </NextUIProvider>
+    );
+  } else {
+    return <Login onLogin={handleLogin} />;
+  }
 }
