@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { BalanceIcon } from "../icons/sidebar/balance-icon";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export const AddTarif = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,11 +29,10 @@ export const AddTarif = () => {
 
   const handleContinue = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const toastId = toastLoading("Loading...");
 
     try {
       if (formData.name !== "" && formData.price !== "") {
-        toastSuccess("Muaffaqiyatli yaratildi", toastId);
+        toastSuccess("Muaffaqiyatli yaratildi");
         console.log(formData);
       } else {
         throw new Error("Ma'lumotlar to'liq emas");

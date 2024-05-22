@@ -8,6 +8,8 @@ export const columns = [
 export const columnsTarif = [
    { name: "Ta'rif turi", uid: "tarif" },
    { name: "Ta'rif narxi", uid: "narx" },
+   { name: "Ta'rif kutish narxi", uid: "waiting" },
+   { name: "Ta'rif tekin kutish vaqti", uid: "time" },
    { name: "ACTIONS", uid: "actions" },
  ];
 
@@ -63,31 +65,43 @@ export const users = [
      id: 1,
      tarif: "Start",
      narx: "5000",
+     waiting: "2000",
+     time: "5"
    },
    {
      id: 2,
      tarif: "Econom",
      narx: "7000",
+     waiting: "2000",
+     time: "5"
    },
    {
      id: 3,
      tarif: "Comfort",
      narx: "10000",
+     waiting: "2000",
+     time: "5"
    },
    {
      id: 4,
      tarif: "Business",
      narx: "15000",
+     waiting: "2000",
+     time: "5"
    },
    {
      id: 5,
      tarif: "Delivery",
      narx: "11000",
+     waiting: "2000",
+     time: "5"
    },
    {
      id: 6,
      tarif: "Load",
      narx: "13000",
+     waiting: "2000",
+     time: "5"
    },
  ];
 

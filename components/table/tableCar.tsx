@@ -18,7 +18,7 @@ import {
 import React, { useState } from "react";
 import { columnsCar, cars } from "./data";
 import { RenderCarCell } from "./renderCar-cell";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export const TableCarWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,26 +50,24 @@ export const TableCarWrapper = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const toastId = toastLoading("Loading...");
 
     try {
       console.log(formData);
-      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi", toastId);
+      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("error", toastId);
+      toastError("error");
     } finally {
       onClose();
     }
   };
 
   const handleDelete = async (id) => {
-    const toastId = toastLoading("Loading...");
 
     try {
       console.log(id);
-      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi", toastId);
+      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("error", toastId);
+      toastError("error");
     } finally {
       onClose();
     }

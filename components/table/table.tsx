@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { RenderCell } from "./render-cell";
 import { columns, users } from "./data";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export const TableWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // Hook for modal
@@ -59,25 +59,23 @@ export const TableWrapper = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const toastId = toastLoading("Loading...");
 
     try {
       console.log(formData);
-      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi", toastId);
+      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("error", toastId);
+      toastError("error");
     } finally {
       onClose();
     }
   };
   const handleDelete = async (id) => {
-    const toastId = toastLoading("Loading...");
 
     try {
       console.log(id);
-      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi", toastId);
+      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("error", toastId);
+      toastError("error");
     } finally {
       onClose();
     }

@@ -9,7 +9,19 @@ export const signIn = async (user) => {
   return data;
 };
 
+export const createTarif = async (formData) => {
+  const { data } = await $host.post(`${API_URL}/tariffs`, {
+    tariff_name: formData.tarif,
+    tariff_price: formData.price,
+    expectation: formData.time,
+    price_for_expectation: formData.waiting
+  });
+  return data;
+};
+
 export const refreshUser = async () => {
-  const { data } = await axios.get(`${API_URL}/refresh`)
+  const { data } = await axios.post(`${API_URL}/refresh`, {
+    withCredentials: true,
+  });
   return data;
 };

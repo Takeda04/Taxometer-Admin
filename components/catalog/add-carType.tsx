@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { CarIcon } from "../icons/catalog/car-icon";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export const AddCardtype = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,10 +27,9 @@ export const AddCardtype = () => {
   };
 
   const handleCreate = () => {
-    const toastId = toastLoading("Loading...");
     try {
       if (formData.type !== "") {
-        toastSuccess("Muaffaqaiyatli yaratildi", toastId);
+        toastSuccess("Muaffaqaiyatli yaratildi");
         console.log(formData);
       } else {
         throw new Error("Ma'lumotlar to'liq emas");

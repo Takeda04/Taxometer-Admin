@@ -22,6 +22,22 @@ export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
+      case "waiting":
+      return (
+        <div>
+          <div>
+            <span>{cellValue}</span>
+          </div>
+        </div>
+      );
+      case "time":
+        return (
+          <div>
+            <div>
+              <span>{cellValue} daqiqa</span>
+            </div>
+          </div>
+        );
     case "actions":
       return (
         <div className="flex items-center gap-4 ">

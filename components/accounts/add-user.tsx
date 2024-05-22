@@ -12,7 +12,7 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { UsersIcon } from "../icons/breadcrumb/users-icon";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export const AddUser = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,13 +35,12 @@ export const AddUser = () => {
   };
 
   const handleTasdiqlash = async (e: { preventDefault: () => void; }) => {
-    const toastId = toastLoading("Loading...")
     e.preventDefault();
     try {
       console.log(formData);
-      toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi", toastId);
+      toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi");
     } catch (error) {
-      toastError("error", toastId);
+      toastError("error");
     }finally{
       onClose()
     }

@@ -1,13 +1,14 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent, useContext } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Input, Button, Link } from "@nextui-org/react";
-import { toastError, toastLoading } from "@/components/toast";
+import { toastError } from "@/components/toast";
 import { signIn } from "../../axios/UsersAPI";
 
 
 interface LoginProps {
   onLogin: (accessToken: string | null) => void;
 }
+
 interface ErrorWithMessage {
   message: string;
 }
@@ -28,24 +29,19 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    const toastId = toastLoading("Loading...");
-
     try {
       if (formData.email !== "" && formData.password !== "") {
         const data = await signIn(formData);
-        localStorage.setItem("accessToken", data.access_token)
+        localStorage.setItem("accessToken", data.access_token);
         onLogin(data.access_token);
-      } else{
+      } else {
         throw new Error("Ma'lumotlar to'liq emas");
       }
     } catch (error) {
       const err = error as ErrorWithMessage;
-      toastError(err.message, toastId);
+      toastError(err.message);
     }
   };
-
-  
-  
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -70,7 +66,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 value={formData.password}
                 onChange={catchChange}
               />
-
               <Button
                 type="submit"
                 className="w-full text-gray dark:text-gray-400"

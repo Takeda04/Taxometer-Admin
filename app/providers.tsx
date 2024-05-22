@@ -6,7 +6,6 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 import { Layout } from "../components/layout/layout";
 import { Login } from "./login/page";
 import { Toaster } from "react-hot-toast";
-import { ContextProvider } from "../axios/index"
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -31,7 +30,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   if (isAuthenticated) {
     return (
       <NextUIProvider>
-        <ContextProvider>
           <Toaster reverseOrder={true} />
           <NextThemesProvider
             defaultTheme="system"
@@ -40,7 +38,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
           >
             <Layout>{children}</Layout>
           </NextThemesProvider>
-        </ContextProvider>
       </NextUIProvider>
     );
   } else {

@@ -18,7 +18,8 @@ import {
 import React, { useState } from "react";
 import { columnsTarif, tarifs } from "./data";
 import { RenderTarifCell } from "./renderTarif-cell";
-import { toastError, toastLoading, toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
+import { createTarif } from "@/axios/UsersAPI";
 
 export const TableTarifWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,7 +27,9 @@ export const TableTarifWrapper = () => {
   const [modalType, setModalType] = useState("");
   const [formData, setFormData] = useState({
     tarif: "",
-    id: ""
+    price: "",
+    time: "",
+    waiting: ""
   });
 
   const catchChange = (event) => {
@@ -41,8 +44,9 @@ export const TableTarifWrapper = () => {
     setSelectedTarif(tarif);
     setFormData({
       tarif: tarif.tarif,
-      narx: tarif.narx,
-      id: tarif.id
+      price: tarif.narx,
+      time: tarif.time,
+      waiting: tarif.waiting
     });
     setModalType(type);
     onOpen();
@@ -50,26 +54,23 @@ export const TableTarifWrapper = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const toastId = toastLoading("Loading...");
-
     try {
-      console.log(formData);
-      toastSuccess("Tarif ma'lumotlari muaffaqiyatli yangilandi", toastId);
+      await createTarif(formData)
+      toastSuccess("Tarif ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("Error", toastId);
+      toastError(error.message);
     } finally {
       onClose();
     }
   };
 
   const handleDelete = async (id) => {
-    const toastId = toastLoading("Loading...");
 
     try {
       console.log(id);
-      toastSuccess("Tarif muaffaqiyatli o'chirildi", toastId);
+      toastSuccess("Tarif muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("Error", toastId);
+      toastError("Error");
     } finally {
       onClose();
     }
@@ -91,10 +92,27 @@ export const TableTarifWrapper = () => {
                   onChange={catchChange}
                 />
                 <Input
-                  name="narx"
+                  name="price"
                   label="Narxi"
                   variant="bordered"
-                  value={formData.narx}
+                  type="number"
+                  value={formData.price}
+                  onChange={catchChange}
+                />
+                 <Input
+                  name="waiting"
+                  label="Tarif kutish vaqti"
+                  variant="bordered"
+                  type="number"
+                  value={formData.waiting}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="time"
+                  label="Tarif tekin kutish vaqti"
+                  variant="bordered"
+                  type="number"
+                  value={formData.time}
                   onChange={catchChange}
                 />
               </ModalBody>
