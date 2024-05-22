@@ -11,6 +11,7 @@ import { UsersIcon } from "@/components/icons/breadcrumb/users-icon";
 import { SettingsIcon } from "@/components/icons/sidebar/settings-icon";
 import { TableWrapper } from "@/components/table/table";
 import { AddUser } from "./add-user";
+import { SearchIcon } from "../icons/searchicon";
 
 export const Accounts = () => {
   return (
@@ -19,6 +20,7 @@ export const Accounts = () => {
       <div className="flex justify-between flex-wrap gap-4 items-center">
         <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
           <Input
+          startContent={<SearchIcon />}
             classNames={{
               input: "w-full",
               mainWrapper: "w-full",

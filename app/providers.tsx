@@ -4,8 +4,9 @@ import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Layout } from "../components/layout/layout";
-import { Login } from "./auth";
+import { Login } from "./login/page";
 import { Toaster } from "react-hot-toast";
+import { ContextProvider } from "../axios/index"
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -27,17 +28,19 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     }
   };
 
-  if (true) {
+  if (isAuthenticated) {
     return (
       <NextUIProvider>
-        <Toaster reverseOrder={true}/>
-        <NextThemesProvider
-          defaultTheme="system"
-          attribute="class"
-          {...themeProps}
-        >
-          <Layout>{children}</Layout>
-        </NextThemesProvider>
+        <ContextProvider>
+          <Toaster reverseOrder={true} />
+          <NextThemesProvider
+            defaultTheme="system"
+            attribute="class"
+            {...themeProps}
+          >
+            <Layout>{children}</Layout>
+          </NextThemesProvider>
+        </ContextProvider>
       </NextUIProvider>
     );
   } else {

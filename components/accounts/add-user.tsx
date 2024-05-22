@@ -72,6 +72,7 @@ export const AddUser = () => {
         aria-label="Add User"
       >
         {"Haydovchi Qo'shish"}
+        
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
         <ModalContent>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Catalog } from '@/components/catalog';
 
-const accounts = () => {
+const Accounts = () => {
    return <Catalog />;
 };
 
-export default accounts;
+export default Accounts;

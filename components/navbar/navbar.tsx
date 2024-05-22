@@ -22,7 +22,7 @@ export const NavbarWrapper = ({ children }: Props) => {
           <BurguerButton  aria-label="button" />
         </NavbarContent>
         <NavbarContent className="w-full max-md:hidden">
-          <Input
+          {/* <Input
             startContent={<SearchIcon />}
             isClearable
             className="w-full"
@@ -31,7 +31,7 @@ export const NavbarWrapper = ({ children }: Props) => {
               mainWrapper: "w-full",
             }}
             placeholder="Search..."
-          />
+          /> */}
         </NavbarContent>
         <NavbarContent
           justify="end"

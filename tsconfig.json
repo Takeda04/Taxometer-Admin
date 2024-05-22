@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "axios/$host.js"  ],
   "exclude": [
     "node_modules"
   ]
