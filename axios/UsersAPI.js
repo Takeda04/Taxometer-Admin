@@ -8,7 +8,7 @@ export const signIn = async (user) => {
   });
   return data;
 };
-
+//create
 export const createTarif = async (formData) => {
   const { data } = await $host.post(`${API_URL}/tariffs`, {
     tariff_name: formData.tarif,
@@ -19,18 +19,40 @@ export const createTarif = async (formData) => {
   return data;
 };
 
+export const createCar = async (formData) => {
+  const { data } = await $host.post(`${API_URL}/carTypes`, formData);
+  return data;
+};
+//update
 export const updateTarif = async (formData) => {
   const { data } = await $host.put(`${API_URL}/tariffs/${formData.id}`, formData);
   return data;
 };
 
+export const updateCar = async (formData) => {
+  const { data } = await $host.put(`${API_URL}/carTypes/${formData.id}`, {
+    name: formData.name
+  });
+  return data;
+};
+//delete
 export const deleteTarif = async (id) => {
   const { data } = await $host.delete(`${API_URL}/tariffs/${id}`);
   return data;
 };
 
+export const deleteCar = async (id) => {
+  const { data } = await $host.delete(`${API_URL}/carTypes/${id}`);
+  return data;
+};
+//get
 export const getTarifs = async () => {
   const { data } = await $host.get(`${API_URL}/tariffs`);
+  return data;
+};
+
+export const getCars = async (page) => {
+  const { data } = await $host.get(`${API_URL}/carTypes?page=${page}`);
   return data;
 };
 

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import {
   Button,
@@ -11,11 +12,12 @@ import {
 } from "@nextui-org/react";
 import { CarIcon } from "../icons/catalog/car-icon";
 import { toastError, toastSuccess } from "../toast";
+import { createCar } from "@/axios/UsersAPI";
 
-export const AddCardtype = () => {
+export const AddCardtype = ({ refreshCars }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
-    type: "",
+    name: "",
   });
 
   const catchChange = (event: { target: { name: any; value: any } }) => {
@@ -26,10 +28,12 @@ export const AddCardtype = () => {
     }));
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     try {
-      if (formData.type !== "") {
+      if (formData.name !== "") {
+        await createCar(formData)
         toastSuccess("Muaffaqaiyatli yaratildi");
+        await refreshCars();
         console.log(formData);
       } else {
         throw new Error("Ma'lumotlar to'liq emas");
@@ -58,10 +62,10 @@ export const AddCardtype = () => {
           </ModalHeader>
           <ModalBody>
             <Input
-              name="type"
+              name="name"
               label="Avtomobil turi"
               variant="bordered"
-              value={formData.type}
+              value={formData.name}
               onChange={catchChange}
             />
           </ModalBody>

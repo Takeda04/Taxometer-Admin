@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -15,19 +16,25 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { columnsCar, cars } from "./data";
 import { RenderCarCell } from "./renderCar-cell";
 import { toastError, toastSuccess } from "../toast";
+// import { AddTarif } from "../catalog/add-tarif";
+import { deleteCar, getCars, updateCar } from "@/axios/UsersAPI";
+import { AddCardtype } from "../catalog/add-carType";
 
 export const TableCarWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedCar, setSelectedCar] = useState(null);
+  const [cars, setCars] = useState([]);
   const [modalType, setModalType] = useState("");
   const [formData, setFormData] = useState({
-    typeCar: "",
-    id: ""
+    name: "",
+    id: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const catchChange = (event) => {
     const { name, value } = event.target;
@@ -38,13 +45,13 @@ export const TableCarWrapper = () => {
   };
 
   const openModal = (type, car) => {
-    setSelectedCar(car); 
+    setSelectedCar(car);
     setFormData({
-      typeCar: car.typeCar,
-      id: car.id
+      name: car.name,
+      id: car.id,
     });
-    setModalType(type); 
-    onOpen(); 
+    setModalType(type);
+    onOpen();
     console.log(car, "selected");
   };
 
@@ -52,18 +59,21 @@ export const TableCarWrapper = () => {
     e.preventDefault();
 
     try {
+      await updateCar(formData);
       console.log(formData);
+      await fetchData();
       toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("error");
+      toastError(error.message);
     } finally {
       onClose();
     }
   };
 
   const handleDelete = async (id) => {
-
     try {
+      await deleteCar(id);
+      await fetchData();
       console.log(id);
       toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
@@ -82,18 +92,28 @@ export const TableCarWrapper = () => {
               <ModalHeader>Avtomobil turini yangilash</ModalHeader>
               <ModalBody>
                 <Input
-                  name="typeCar"
+                  name="name"
                   label="Avtomobil turi"
                   variant="bordered"
-                  value={formData.typeCar}
+                  value={formData.name}
                   onChange={catchChange}
                 />
               </ModalBody>
               <ModalFooter>
-                <Button aria-label="button" color="danger" variant="flat" onClick={onClose}>
+                <Button
+                  aria-label="button"
+                  color="danger"
+                  variant="flat"
+                  onClick={onClose}
+                >
                   Yopish
                 </Button>
-                <Button aria-label="button"  color="primary" variant="flat" onClick={handleUpdate}>
+                <Button
+                  aria-label="button"
+                  color="primary"
+                  variant="flat"
+                  onClick={handleUpdate}
+                >
                   Yangilash
                 </Button>
               </ModalFooter>
@@ -106,13 +126,26 @@ export const TableCarWrapper = () => {
             <ModalContent>
               <ModalHeader>{"Haydovchini o'chirish"}</ModalHeader>
               <ModalBody>
-                <p>Rostan ham <b>{selectedCar?.typeCar}</b> ni {"o'chirishni hohlaysizmi?"}</p>
+                <p>
+                  Rostan ham <b>{selectedCar?.name}</b> ni{" "}
+                  {"o'chirishni hohlaysizmi?"}
+                </p>
               </ModalBody>
               <ModalFooter>
-                <Button aria-label="button"  color="primary" variant="flat" onClick={onClose}>
+                <Button
+                  aria-label="button"
+                  color="primary"
+                  variant="flat"
+                  onClick={onClose}
+                >
                   Yopish
                 </Button>
-                <Button  aria-label="button" color="danger" variant="flat" onClick={() => handleDelete(selectedCar?.id)}>
+                <Button
+                  aria-label="button"
+                  color="danger"
+                  variant="flat"
+                  onClick={() => handleDelete(selectedCar?.id)}
+                >
                   {"O'chirish"}
                 </Button>
               </ModalFooter>
@@ -123,9 +156,36 @@ export const TableCarWrapper = () => {
         return null;
     }
   };
+  const [meta, setMeta] = useState();
+
+  const fetchData = async () => {
+    try {
+      const data = await getCars(currentPage);
+      setCars(data.data);
+      setMeta(data.meta);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage]);
+
+  const handlePageChange = (newpage) => {
+    setCurrentPage(newpage);
+    console.log(newpage);
+  };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="w-full flex flex-col gap-4">
+      <AddCardtype refreshCars={fetchData} />
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columnsCar}>
           {(column) => (
@@ -155,6 +215,12 @@ export const TableCarWrapper = () => {
         </TableBody>
       </Table>
       {renderModalContent()}
+      <Pagination
+        total={Math.ceil(meta.total / meta.per_page)}
+        initialPage={currentPage}
+        variant={"flat"}
+        onChange={(newPage) => handlePageChange(newPage)}
+      />
     </div>
   );
 };

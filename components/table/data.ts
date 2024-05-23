@@ -15,7 +15,7 @@ export const columnsTarif = [
 
 
  export const columnsCar = [
-  { name: "Avtomobil turi", uid: "typeCar" },
+  { name: "Avtomobil turi", uid: "name" },
   { name: "ACTIONS", uid: "actions" },
 ];
 

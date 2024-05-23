@@ -10,10 +10,8 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
-import { useRouter } from "next/navigation";
 
 export const UserDropdown = () => {
-  const router = useRouter();
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
