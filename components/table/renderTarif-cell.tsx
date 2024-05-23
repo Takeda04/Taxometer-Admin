@@ -2,19 +2,21 @@ import {  Tooltip} from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
-import { tarifs } from "./data";
+
 
 interface Props {
-  tarif: (typeof tarifs)[number];
+  tarif: any;
   columnKey: string | React.Key;
-  openModal: (type: string, user: (typeof tarifs)[number]) => void;
+  openModal: (type: string, user: any) => void;
 }
 
 export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
   // @ts-ignore
   const cellValue = tarif[columnKey];
+  console.log(columnKey, "cell");
+  
   switch (columnKey) {
-    case "tarif":
+    case "tariff_name":
       return (
         <div>
           <div>
@@ -22,7 +24,7 @@ export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
-      case "waiting":
+      case "tariff_price":
       return (
         <div>
           <div>
@@ -30,7 +32,15 @@ export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
-      case "time":
+      case "price_for_expectation":
+      return (
+        <div>
+          <div>
+            <span>{cellValue}</span>
+          </div>
+        </div>
+      );
+      case "expectation":
         return (
           <div>
             <div>

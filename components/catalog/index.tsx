@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { AddTarif } from "./add-tarif";
 import { AddCardtype } from "./add-carType";
 import { TableTarifWrapper } from "../table/tableTarif";
 import { TableCarWrapper } from "../table/tableCar";
@@ -11,11 +10,11 @@ export const Catalog = () => {
       <h3 className="text-xl font-semibold">{"Ta'riflar"}</h3>
       <div className="flex justify-between flex-wrap gap-4 items-center">
         <div className="flex flex-row gap-3.5 flex-wrap">
-          <AddTarif />
+          {/* No need to import and use AddTarif here */}
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">
-        <TableTarifWrapper />
+        <TableTarifWrapper /> {/* TableTarifWrapper includes AddTarif */}
       </div>
       <h3 className="text-xl font-semibold">Avtomobil turlari</h3>
       <div className="flex justify-between flex-wrap gap-4 items-center">

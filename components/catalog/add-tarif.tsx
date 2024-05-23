@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import {
   Button,
@@ -13,7 +14,7 @@ import { BalanceIcon } from "../icons/sidebar/balance-icon";
 import { toastError, toastSuccess } from "../toast";
 import { createTarif } from "@/axios/UsersAPI";
 
-export const AddTarif = () => {
+export const AddTarif = ({ refreshTarifs }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
     tarif: "",
@@ -22,7 +23,7 @@ export const AddTarif = () => {
     waiting: ""
   });
 
-  const catchChange = (event: { target: { name: any; value: any } }) => {
+  const catchChange = (event: { target: { name: any; value: any; }; }) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -30,19 +31,19 @@ export const AddTarif = () => {
     }));
   };
 
-  const handleCreate = async (e: { preventDefault: () => void }) => {
+  const handleCreate = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
       if (formData.tarif !== "" && formData.price !== "" && formData.time !== "" && formData.waiting !== "") {
         await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
-        console.log(formData);
+        refreshTarifs(); // Refresh the tariffs list
       } else {
         throw new Error("Ma'lumotlar to'liq emas");
       }
     } catch (error) {
-      // toastError(error.message, toastId);
+      // toastError(error.message);
     } finally {
       onClose();
     }
@@ -51,7 +52,7 @@ export const AddTarif = () => {
   return (
     <div>
       <Button
-       aria-label="button" 
+        aria-label="button" 
         onClick={onOpen}
         color="primary"
         variant="bordered"
@@ -65,43 +66,43 @@ export const AddTarif = () => {
             {"Ta'rif Yaratish"}
           </ModalHeader>
           <ModalBody>
-          <Input
-                  name="tarif"
-                  label="Tarif"
-                  variant="bordered"
-                  value={formData.tarif}
-                  onChange={catchChange}
-                />
-                <Input
-                  name="price"
-                  label="Narxi"
-                  variant="bordered"
-                  type="number"
-                  value={formData.price}
-                  onChange={catchChange}
-                />
-                 <Input
-                  name="waiting"
-                  label="Tarif kutish vaqti"
-                  variant="bordered"
-                  type="number"
-                  value={formData.waiting}
-                  onChange={catchChange}
-                />
-                <Input
-                  name="time"
-                  label="Tarif tekin kutish vaqti"
-                  variant="bordered"
-                  type="number"
-                  value={formData.time}
-                  onChange={catchChange}
-                />
+            <Input
+              name="tarif"
+              label="Tarif"
+              variant="bordered"
+              value={formData.tarif}
+              onChange={catchChange}
+            />
+            <Input
+              name="price"
+              label="Narxi"
+              variant="bordered"
+              type="number"
+              value={formData.price}
+              onChange={catchChange}
+            />
+            <Input
+              name="waiting"
+              label="Tarif kutish vaqti"
+              variant="bordered"
+              type="number"
+              value={formData.waiting}
+              onChange={catchChange}
+            />
+            <Input
+              name="time"
+              label="Tarif tekin kutish vaqti"
+              variant="bordered"
+              type="number"
+              value={formData.time}
+              onChange={catchChange}
+            />
           </ModalBody>
           <ModalFooter>
-            <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
+            <Button aria-label="button" color="danger" variant="flat" onClick={onClose}>
               Yopish
             </Button>
-            <Button aria-label="button"  color="primary" variant="flat" onClick={handleCreate}>
+            <Button aria-label="button" color="primary" variant="flat" onClick={handleCreate}>
               Tasdiqlash
             </Button>
           </ModalFooter>

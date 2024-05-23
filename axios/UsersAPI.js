@@ -19,6 +19,21 @@ export const createTarif = async (formData) => {
   return data;
 };
 
+export const updateTarif = async (formData) => {
+  const { data } = await $host.put(`${API_URL}/tariffs/${formData.id}`, formData);
+  return data;
+};
+
+export const deleteTarif = async (id) => {
+  const { data } = await $host.delete(`${API_URL}/tariffs/${id}`);
+  return data;
+};
+
+export const getTarifs = async () => {
+  const { data } = await $host.get(`${API_URL}/tariffs`);
+  return data;
+};
+
 export const refreshUser = async () => {
   const { data } = await axios.post(`${API_URL}/refresh`, {
     withCredentials: true,
