@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
+import { LogoutIcon } from "../icons/navbar/logout-icon";
 
 export const UserDropdown = () => {
 
@@ -31,7 +32,7 @@ export const UserDropdown = () => {
         aria-label="User menu actions"
         onAction={(actionKey) => console.log({ actionKey })}
       >
-        <DropdownItem onClick={handleLogout}  key="logout" color="danger" className="text-danger ">
+        <DropdownItem startContent={<LogoutIcon/>} onClick={handleLogout}  key="logout" color="danger" className="text-danger ">
           Chiqish
         </DropdownItem>
         <DropdownItem key="switch">
