@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { User, Tooltip, Chip, useDisclosure } from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
@@ -27,11 +28,11 @@ export const RenderCell = ({  user, columnKey, openModal }: Props) => {
           {user.name}
         </User>
       );
-    case "role":
+    case "tarif":
       return (
         <div>
           <div>
-            <span>{cellValue}</span>
+            <span>{user?.tariff?.tariff_name}</span>
           </div>
         </div>
       );

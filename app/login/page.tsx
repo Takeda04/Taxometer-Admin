@@ -14,7 +14,7 @@ interface ErrorWithMessage {
 }
 
 
-const Login = (onLogin) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,12 +30,12 @@ const Login = (onLogin) => {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
       if (formData.email !== "" && formData.password !== "") {
         const data = await signIn(formData);
         localStorage.setItem("accessToken", data.access_token);
         sessionStorage.setItem("accessToken", data.access_token);
-        onLogin(data.access_token);
         window.location.reload();
       } else {
         throw new Error("Ma'lumotlar to'liq emas");

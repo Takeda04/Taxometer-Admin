@@ -85,6 +85,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       </NextUIProvider>
     );
   } else {
-    return <Login onLogin={handleLogin} />;
+    return <Login/>;
   }
 }

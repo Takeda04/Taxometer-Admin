@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -14,24 +14,33 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Input
+  Input,
 } from "@nextui-org/react";
 import { RenderCell } from "./render-cell";
-import { columns, users } from "./data";
+import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
+import { getDrivers } from "@/axios/UsersAPI";
 
 export const TableWrapper = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Hook for modal
-  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user
-  const [modalType, setModalType] = useState(""); // State to store modal type
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [modalType, setModalType] = useState("");
+  const [users, setUsers] = useState([]);
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     phoneNumber: "",
     carNumber: "",
     key: "",
-    status: "",
-    tarif: ""
+    status: [
+      {
+        status: "ACTIVE",
+      },
+      {
+        status: "InACTIVE",
+      },
+    ],
+    tarif: "",
   });
 
   const catchChange = (event) => {
@@ -45,10 +54,10 @@ export const TableWrapper = () => {
   const openModal = (type, user) => {
     setSelectedUser(user); // Set the selected user
     setFormData({
-      fullName: user.name,
-      phoneNumber: user.phoneNumber,
-      carNumber: user.carNumber,
-      key: user.key,
+      name: user.name,
+      phone: user.phone,
+      car_number: user.car_number,
+      uuid: user.uuid,
       status: user.status,
       tarif: user.tarif,
     });
@@ -70,7 +79,6 @@ export const TableWrapper = () => {
     }
   };
   const handleDelete = async (id) => {
-
     try {
       console.log(id);
       toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
@@ -89,12 +97,30 @@ export const TableWrapper = () => {
             <ModalContent>
               <ModalHeader>User Details</ModalHeader>
               <ModalBody>
-                <p><b>F.I.O</b>: {selectedUser?.name}</p>
-                <p><b>Telefon raqami</b>: {selectedUser?.phoneNumber}</p>
-                <p><b>Tarif</b>: {selectedUser?.tarif}</p>
-                <p><b>Status</b>: {selectedUser?.status}</p>
-                <p><b>KEY</b>: {selectedUser?.key}</p>
-                <p><b>Avtomobil raqami</b>: {selectedUser?.carNumber}</p>
+                <p>
+                  <b>F.I.O</b>: {selectedUser?.name}
+                </p>
+                <p>
+                  <b>Haydovchi hujjati</b>: {selectedUser?.driver_license}
+                </p>
+                <p>
+                  <b>Telefon raqami</b>: {selectedUser?.phone}
+                </p>
+                <p>
+                  <b>Tarif</b>: {selectedUser?.tariff?.tariff_name}
+                </p>
+                <p>
+                  <b>Status</b>: {selectedUser?.status}
+                </p>
+                <p>
+                  <b>KEY</b>: {selectedUser?.uuid}
+                </p>
+                <p>
+                  <b>Avtomobil turi</b>: {selectedUser?.car_type?.name}
+                </p>
+                <p>
+                  <b>Avtomobil raqami</b>: {selectedUser?.car_number}
+                </p>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onClick={onClose}>
@@ -114,28 +140,28 @@ export const TableWrapper = () => {
                   name="fullName"
                   label="F.I.O"
                   variant="bordered"
-                  value={formData.fullName}
+                  value={formData.name}
                   onChange={catchChange}
                 />
                 <Input
                   name="phoneNumber"
                   label="Telefon raqami"
                   variant="bordered"
-                  value={formData.phoneNumber}
+                  value={formData.phone}
                   onChange={catchChange}
                 />
                 <Input
                   name="carNumber"
                   label="Avtomobil raqami"
                   variant="bordered"
-                  value={formData.carNumber}
+                  value={formData.car_number}
                   onChange={catchChange}
                 />
                 <Input
                   name="key"
                   label="Key"
                   variant="bordered"
-                  value={formData.key}
+                  value={formData.uuid}
                   onChange={catchChange}
                 />
                 <Input
@@ -170,13 +196,20 @@ export const TableWrapper = () => {
             <ModalContent>
               <ModalHeader>{"Haydovchini o'chirish"}</ModalHeader>
               <ModalBody>
-                <p>Rostan ham <b>{selectedUser?.name}</b> ni {"o'chirishni hohlaysizmi"}</p>
+                <p>
+                  Rostan ham <b>{selectedUser?.name}</b> ni{" "}
+                  {"o'chirishni hohlaysizmi"}
+                </p>
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" variant="flat" onClick={onClose}>
                   Yopish
                 </Button>
-                <Button color="danger" variant="flat" onClick={() => handleDelete(selectedUser.id)}>
+                <Button
+                  color="danger"
+                  variant="flat"
+                  onClick={() => handleDelete(selectedUser.id)}
+                >
                   {"O'chirish"}
                 </Button>
               </ModalFooter>
@@ -187,6 +220,20 @@ export const TableWrapper = () => {
         return null;
     }
   };
+
+  const getDriver = async () => {
+    try {
+      const data = await getDrivers();
+      setUsers(data.data);
+      console.log(data.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getDriver();
+  }, []);
 
   return (
     <div className="w-full flex flex-col gap-4">

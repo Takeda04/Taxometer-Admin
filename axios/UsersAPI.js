@@ -51,6 +51,11 @@ export const getTarifs = async () => {
   return data;
 };
 
+export const getDrivers = async () => {
+  const { data } = await $host.get(`${API_URL}/drivers`);
+  return data;
+};
+
 export const getCars = async (page) => {
   const { data } = await $host.get(`${API_URL}/carTypes?page=${page}`);
   return data;
