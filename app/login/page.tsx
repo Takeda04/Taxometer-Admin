@@ -36,6 +36,7 @@ const Login = (onLogin) => {
         localStorage.setItem("accessToken", data.access_token);
         sessionStorage.setItem("accessToken", data.access_token);
         onLogin(data.access_token);
+        window.location.reload();
       } else {
         throw new Error("Ma'lumotlar to'liq emas");
       }
