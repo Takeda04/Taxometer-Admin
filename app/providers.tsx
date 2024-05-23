@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Layout } from "../components/layout/layout";
-import { Login } from "./login/page";
+
 import { Toaster } from "react-hot-toast";
 import { refreshUser } from "@/axios/UsersAPI";
+import Login from "./login/page";
 
 
 export interface ProvidersProps {

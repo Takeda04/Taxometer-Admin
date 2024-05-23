@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Input, Button, Link } from "@nextui-org/react";
@@ -5,15 +6,15 @@ import { toastError } from "@/components/toast";
 import { signIn } from "../../axios/UsersAPI";
 
 
-interface LoginProps {
-  onLogin: (accessToken: string | null) => void;
-}
+
+
 
 interface ErrorWithMessage {
   message: string;
 }
 
-export const Login: React.FC<LoginProps> = ({ onLogin }) => {
+
+const Login = (onLogin) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -82,3 +83,5 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     </section>
   );
 };
+
+export default Login
