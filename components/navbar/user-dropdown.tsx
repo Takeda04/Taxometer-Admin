@@ -10,8 +10,16 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { DarkModeSwitch } from "./darkmodeswitch";
+import { useRouter } from "next/navigation";
 
 export const UserDropdown = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    sessionStorage.removeItem("accessToken");
+    window.location.reload();
+  }
   return (
     <Dropdown>
       <NavbarItem>
@@ -25,7 +33,7 @@ export const UserDropdown = () => {
         aria-label="User menu actions"
         onAction={(actionKey) => console.log({ actionKey })}
       >
-        <DropdownItem key="logout" color="danger" className="text-danger ">
+        <DropdownItem onClick={handleLogout}  key="logout" color="danger" className="text-danger ">
           Chiqish
         </DropdownItem>
         <DropdownItem key="switch">

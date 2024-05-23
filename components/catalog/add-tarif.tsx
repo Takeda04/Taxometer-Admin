@@ -11,12 +11,15 @@ import {
 } from "@nextui-org/react";
 import { BalanceIcon } from "../icons/sidebar/balance-icon";
 import { toastError, toastSuccess } from "../toast";
+import { createTarif } from "@/axios/UsersAPI";
 
 export const AddTarif = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({
-    name: "",
+    tarif: "",
     price: "",
+    time: "",
+    waiting: ""
   });
 
   const catchChange = (event: { target: { name: any; value: any } }) => {
@@ -27,11 +30,12 @@ export const AddTarif = () => {
     }));
   };
 
-  const handleContinue = (e: { preventDefault: () => void }) => {
+  const handleCreate = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
-      if (formData.name !== "" && formData.price !== "") {
+      if (formData.tarif !== "" && formData.price !== "" && formData.time !== "" && formData.waiting !== "") {
+        await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
         console.log(formData);
       } else {
@@ -61,27 +65,43 @@ export const AddTarif = () => {
             {"Ta'rif Yaratish"}
           </ModalHeader>
           <ModalBody>
-            <Input
-              name="name"
-              label="Tarif nomi"
-              variant="bordered"
-              value={formData.name}
-              onChange={catchChange}
-            />
-            <Input
-              name="price"
-              label="Narxi"
-              variant="bordered"
-              type="number"
-              value={formData.price}
-              onChange={catchChange}
-            />
+          <Input
+                  name="tarif"
+                  label="Tarif"
+                  variant="bordered"
+                  value={formData.tarif}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="price"
+                  label="Narxi"
+                  variant="bordered"
+                  type="number"
+                  value={formData.price}
+                  onChange={catchChange}
+                />
+                 <Input
+                  name="waiting"
+                  label="Tarif kutish vaqti"
+                  variant="bordered"
+                  type="number"
+                  value={formData.waiting}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="time"
+                  label="Tarif tekin kutish vaqti"
+                  variant="bordered"
+                  type="number"
+                  value={formData.time}
+                  onChange={catchChange}
+                />
           </ModalBody>
           <ModalFooter>
             <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
               Yopish
             </Button>
-            <Button aria-label="button"  color="primary" variant="flat" onClick={handleContinue}>
+            <Button aria-label="button"  color="primary" variant="flat" onClick={handleCreate}>
               Tasdiqlash
             </Button>
           </ModalFooter>

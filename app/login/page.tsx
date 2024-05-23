@@ -33,6 +33,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (formData.email !== "" && formData.password !== "") {
         const data = await signIn(formData);
         localStorage.setItem("accessToken", data.access_token);
+        sessionStorage.setItem("accessToken", data.access_token);
         onLogin(data.access_token);
       } else {
         throw new Error("Ma'lumotlar to'liq emas");
