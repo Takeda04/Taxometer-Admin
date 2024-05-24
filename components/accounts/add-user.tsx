@@ -16,7 +16,7 @@ import { UsersIcon } from "../icons/breadcrumb/users-icon";
 import { toastError, toastSuccess } from "../toast";
 import { createDriver, getCars, getTarifs } from "@/axios/UsersAPI";
 
-export const AddUser = () => {
+export const AddUser = ({refreshDrivers}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [carTypes, setCarTypes] = useState([]);
   const [tarifOptions, setTarifOptions] = useState([]);
@@ -69,8 +69,8 @@ export const AddUser = () => {
         formData.tariff_id !== ""
       ) {
         await createDriver(formData);
-        console.log(formData);
         toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi");
+        await refreshDrivers();
       }else{
         throw new Error("Ma'lumotlar to'liq emas");
       }
