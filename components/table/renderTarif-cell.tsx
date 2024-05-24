@@ -13,7 +13,6 @@ interface Props {
 export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
   // @ts-ignore
   const cellValue = tarif[columnKey];
-  console.log(columnKey, "cell");
   
   switch (columnKey) {
     case "tariff_name":

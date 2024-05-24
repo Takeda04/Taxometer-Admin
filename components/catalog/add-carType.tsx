@@ -39,7 +39,7 @@ export const AddCardtype = ({ refreshCars }) => {
         throw new Error("Ma'lumotlar to'liq emas");
       }
     } catch (error) {
-      // toastError(error.message, toastId);
+      toastError(error.message);
     }
     onClose();
   };

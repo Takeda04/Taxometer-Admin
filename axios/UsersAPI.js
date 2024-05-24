@@ -23,6 +23,11 @@ export const createCar = async (formData) => {
   const { data } = await $host.post(`${API_URL}/carTypes`, formData);
   return data;
 };
+
+export const createDriver = async (formData) => {
+  const { data } = await $host.post(`${API_URL}/drivers`, formData);
+  return data;
+};
 //update
 export const updateTarif = async (formData) => {
   const { data } = await $host.put(`${API_URL}/tariffs/${formData.id}`, formData);
@@ -51,13 +56,13 @@ export const getTarifs = async () => {
   return data;
 };
 
-export const getDrivers = async () => {
-  const { data } = await $host.get(`${API_URL}/drivers`);
+export const getDrivers = async (page) => {
+  const { data } = await $host.get(`${API_URL}/drivers?page=${page}`);
   return data;
 };
 
 export const getCars = async (page) => {
-  const { data } = await $host.get(`${API_URL}/carTypes?page=${page}`);
+  const { data } = await $host.get(`${API_URL}/carTypes`);
   return data;
 };
 

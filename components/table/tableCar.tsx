@@ -156,13 +156,12 @@ export const TableCarWrapper = () => {
         return null;
     }
   };
-  const [meta, setMeta] = useState();
 
   const fetchData = async () => {
     try {
-      const data = await getCars(currentPage);
-      setCars(data.data);
-      setMeta(data.meta);
+      const {data} = await getCars();
+      setCars(data);
+      console.log(data, "carsss");
     } catch (error) {
       console.log(error);
     } finally {
@@ -215,12 +214,12 @@ export const TableCarWrapper = () => {
         </TableBody>
       </Table>
       {renderModalContent()}
-      <Pagination
-        total={Math.ceil(meta.total / meta.per_page)}
+      {/* <Pagination
+        total={Math.ceil(data)}
         initialPage={currentPage}
         variant={"flat"}
         onChange={(newPage) => handlePageChange(newPage)}
-      />
+      /> */}
     </div>
   );
 };

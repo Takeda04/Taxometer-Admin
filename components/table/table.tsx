@@ -15,6 +15,7 @@ import {
   Button,
   useDisclosure,
   Input,
+  Pagination,
 } from "@nextui-org/react";
 import { RenderCell } from "./render-cell";
 import { columns } from "./data";
@@ -42,6 +43,9 @@ export const TableWrapper = () => {
     ],
     tarif: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [meta, setMeta] = useState();
 
   const catchChange = (event) => {
     const { name, value } = event.target;
@@ -221,19 +225,29 @@ export const TableWrapper = () => {
     }
   };
 
-  const getDriver = async () => {
+  const fetchDriver = async () => {
     try {
-      const data = await getDrivers();
+      const data = await getDrivers(currentPage);
       setUsers(data.data);
-      console.log(data.data);
+      setMeta(data.meta);
     } catch (error) {
       console.log(error.message);
+    }finally{
+      setLoading(false)
     }
   };
 
   useEffect(() => {
-    getDriver();
-  }, []);
+    fetchDriver();
+  }, [currentPage]);
+
+  const handlePageChange = (newpage) => {
+    setCurrentPage(newpage);
+  };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -268,6 +282,12 @@ export const TableWrapper = () => {
 
       {/* Render modal based on type */}
       {renderModalContent()}
+      <Pagination
+        total={Math.ceil(meta.total / meta.per_page)}
+        initialPage={currentPage}
+        variant={"flat"}
+        onChange={(newPage) => handlePageChange(newPage)}
+      />
     </div>
   );
 };

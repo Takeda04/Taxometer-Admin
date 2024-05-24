@@ -162,7 +162,6 @@ export const TableTarifWrapper = () => {
     try {
       const { data } = await getTarifs();
       setTarifs(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

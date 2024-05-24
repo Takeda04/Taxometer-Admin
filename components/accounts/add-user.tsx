@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//@ts-nocheck
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -13,53 +14,88 @@ import {
 } from "@nextui-org/react";
 import { UsersIcon } from "../icons/breadcrumb/users-icon";
 import { toastError, toastSuccess } from "../toast";
+import { createDriver, getCars, getTarifs } from "@/axios/UsersAPI";
 
 export const AddUser = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+  const [carTypes, setCarTypes] = useState([]);
+  const [tarifOptions, setTarifOptions] = useState([]);
+
   const [formData, setFormData] = useState({
-    fullName: "",
-    phoneNumber: "",
-    carNumber: "",
-    licensePlate: "",
-    carType: "",
-    tarif: "",
+    name: "",
+    phone: "",
+    driver_license: "",
+    car_number: "",
+    tariff_id: undefined,
+    car_type_id: undefined,
   });
 
-  const catchChange = (event: { target: { name: any; value: any; }; }) => {
+  const catchChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    
+    const licenseRegex = /^[A-Z0-9]+$/;
+    
+    const carNumberRegex = /^[A-Z0-9]+$/;
+    
+    if (name === "driver_license" && licenseRegex.test(value)) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.toUpperCase(),
+      }));
+    } else if (name === "car_number" && carNumberRegex.test(value)) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.toUpperCase(),
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
+  
 
-  const handleTasdiqlash = async (e: { preventDefault: () => void; }) => {
+  const handleTasdiqlash = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     try {
-      console.log(formData);
-      toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi");
+      if (
+        formData.name !== "" &&
+        formData.phone !== "" &&
+        formData.car_number !== "" &&
+        formData.car_type_id !== "" &&
+        formData.driver_license !== "" &&
+        formData.tariff_id !== ""
+      ) {
+        await createDriver(formData);
+        console.log(formData);
+        toastSuccess("Foydalanuvchi muaffaqiyatli ro'yhatdan o'tkazildi");
+      }else{
+        throw new Error("Ma'lumotlar to'liq emas");
+      }
     } catch (error) {
-      toastError("error");
-    }finally{
-      onClose()
+      toastError(error.message);
+    } finally {
+      onClose();
     }
   };
 
-  const carTypes = [
-    { car: "Chevrolet", value: "chevrolet" },
-    { car: "Nissan", value: "nissan" },
-    { car: "Kia", value: "kia" },
-  ];
+  const getTarif = async () => {
+    try {
+      const { data } = await getTarifs();
+      const car = await getCars();
+      setTarifOptions(data);
+      setCarTypes(car.data);
+      console.log(data, "data");
+    } catch (error) {
+      // console.log(error.message);
+    }
+  };
 
-  const tarifOptions = [
-    { tarif: "START", value: "start" },
-    { tarif: "EKONOM", value: "ekonom" },
-    { tarif: "COMFORT", value: "comfort" },
-    { tarif: "BUSINESS", value: "business" },
-    { tarif: "DELIVERY", value: "delivery" },
-    { tarif: "LOAD", value: "load" },
-  ];
+  useEffect(() => {
+    getTarif();
+  }, []);
 
   return (
     <div>
@@ -71,70 +107,79 @@ export const AddUser = () => {
         aria-label="Add User"
       >
         {"Haydovchi Qo'shish"}
-        
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
         <ModalContent>
           <ModalHeader>{"Haydovchi Qo'shish"}</ModalHeader>
           <ModalBody>
             <Input
-              name="fullName"
+              name="name"
               label="F.I.O"
               variant="bordered"
-              value={formData.fullName}
+              value={formData.name}
               onChange={catchChange}
             />
             <Input
-              name="phoneNumber"
+              name="phone"
               label="Telefon raqami"
               variant="bordered"
-              value={formData.phoneNumber}
+              value={formData.phone}
               onChange={catchChange}
             />
             <Input
-              name="carNumber"
-              label="Moshina raqami"
-              variant="bordered"
-              value={formData.carNumber}
-              onChange={catchChange}
-            />
-            <Input
-              name="licensePlate"
+              name="driver_license"
               label="Haydovchilik guvohnoma"
               variant="bordered"
-              value={formData.licensePlate}
+              value={formData.driver_license}
+              onChange={catchChange}
+            />
+            <Input
+              name="car_number"
+              label="Avtomobil raqami"
+              variant="bordered"
+              value={formData.car_number}
               onChange={catchChange}
             />
             <Select
-              name="carType"
+              name="car_type_id"
               label="Moshina turi"
-              value={formData.carType}
+              value={formData.car_type_id}
               onChange={catchChange}
             >
-              {carTypes.map(({ car, value }) => (
-                <SelectItem key={value} value={value}>
-                  {car}
+              {carTypes.map(({ name, id }) => (
+                <SelectItem key={id} value={id}>
+                  {name}
                 </SelectItem>
               ))}
             </Select>
             <Select
-              name="tarif"
+              name="tariff_id"
               label="Tarif"
-              value={formData.tarif}
+              value={formData.tariff_id}
               onChange={catchChange}
             >
-              {tarifOptions.map(({ tarif, value }) => (
-                <SelectItem key={value} value={value}>
-                  {tarif}
+              {tarifOptions.map(({ tariff_name, id }) => (
+                <SelectItem key={id} value={id}>
+                  {tariff_name}
                 </SelectItem>
               ))}
             </Select>
           </ModalBody>
           <ModalFooter>
-            <Button aria-label="button"  color="danger" variant="flat" onClick={onClose}>
+            <Button
+              aria-label="button"
+              color="danger"
+              variant="flat"
+              onClick={onClose}
+            >
               Yopish
             </Button>
-            <Button aria-label="button"  color="primary" variant="flat" onClick={handleTasdiqlash}>
+            <Button
+              aria-label="button"
+              color="primary"
+              variant="flat"
+              onClick={handleTasdiqlash}
+            >
               Tasdiqlash
             </Button>
           </ModalFooter>
