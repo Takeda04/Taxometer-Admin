@@ -20,7 +20,7 @@ import {
 import { RenderCell } from "./render-cell";
 import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
-import { getDrivers } from "@/axios/UsersAPI";
+import { deleteDriver, getDrivers } from "@/axios/UsersAPI";
 
 export const TableWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -84,7 +84,7 @@ export const TableWrapper = () => {
   };
   const handleDelete = async (id) => {
     try {
-      console.log(id);
+      await deleteDriver(id);
       toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
       toastError("error");

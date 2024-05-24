@@ -50,6 +50,11 @@ export const deleteCar = async (id) => {
   const { data } = await $host.delete(`${API_URL}/carTypes/${id}`);
   return data;
 };
+
+export const deleteDriver = async (id) => {
+  const { data } = await $host.delete(`${API_URL}/drivers/${id}`);
+  return data;
+};
 //get
 export const getTarifs = async () => {
   const { data } = await $host.get(`${API_URL}/tariffs`);
