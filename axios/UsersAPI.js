@@ -34,6 +34,15 @@ export const updateTarif = async (formData) => {
   return data;
 };
 
+export const updateDriver = async (formData) => {
+  const { data } = await $host.put(`${API_URL}/drivers/${formData.id}`, {
+    status: formData.status,
+    name: formData.name,
+    tariff_id: formData.tariff_id 
+  });
+  return data;
+};
+
 export const updateCar = async (formData) => {
   const { data } = await $host.put(`${API_URL}/carTypes/${formData.id}`, {
     name: formData.name

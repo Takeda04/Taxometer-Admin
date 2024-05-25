@@ -16,32 +16,29 @@ import {
   useDisclosure,
   Input,
   Pagination,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
 import { RenderCell } from "./render-cell";
 import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
-import { deleteDriver, getDrivers } from "@/axios/UsersAPI";
+import { deleteDriver, getDrivers, getTarifs, updateDriver } from "@/axios/UsersAPI";
+import { AddUser } from "../accounts/add-user";
+import { ExportIcon } from "../icons/accounts/export-icon";
+import { SearchIcon } from "../icons/searchicon";
 
 export const TableWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedUser, setSelectedUser] = useState(null);
   const [modalType, setModalType] = useState("");
   const [users, setUsers] = useState([]);
+  const [tarif, setTarif] = useState([]);
 
   const [formData, setFormData] = useState({
+    id: null,
     name: "",
-    phoneNumber: "",
-    carNumber: "",
-    key: "",
-    status: [
-      {
-        status: "ACTIVE",
-      },
-      {
-        status: "InACTIVE",
-      },
-    ],
-    tarif: "",
+    status: "",
+    tariff_id: null,
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -54,27 +51,34 @@ export const TableWrapper = () => {
       [name]: value,
     }));
   };
+  console.log(formData)
 
-  const openModal = (type, user) => {
-    setSelectedUser(user); // Set the selected user
-    setFormData({
-      name: user.name,
-      phone: user.phone,
-      car_number: user.car_number,
-      uuid: user.uuid,
-      status: user.status,
-      tarif: user.tarif,
-    });
-    setModalType(type); // Set the modal type
-    onOpen(); // Open the modal
-    console.log(user, "selected");
+  const openModal = async (type, user) => {
+    try {
+      const {data} = await getTarifs();
+      setTarif(data);
+      setSelectedUser(user);
+      setFormData({
+        id: user.id,
+        name: user.name,
+        status: user.status,
+        tariff_id: user.tariff.id,
+      });
+      setModalType(type); // Set the modal type
+      onOpen(); // Open the modal
+      console.log(user)
+    } catch (error) {
+      console.log(error);
+    }
   };
+  console.log(tarif, "selected");
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
-      console.log(formData);
+      await updateDriver(formData);
+      fetchDriver();
       toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
       toastError("error");
@@ -85,6 +89,7 @@ export const TableWrapper = () => {
   const handleDelete = async (id) => {
     try {
       await deleteDriver(id);
+      fetchDriver();
       toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
       toastError("error");
@@ -92,6 +97,14 @@ export const TableWrapper = () => {
       onClose();
     }
   };
+  const state = [
+    {
+      stats: "active",
+    },
+    {
+      stats: "inactive",
+    },
+  ];
 
   const renderModalContent = () => {
     switch (modalType) {
@@ -141,47 +154,38 @@ export const TableWrapper = () => {
               <ModalHeader>Haydovchini yangilash</ModalHeader>
               <ModalBody>
                 <Input
-                  name="fullName"
+                  name="name"
                   label="F.I.O"
                   variant="bordered"
                   value={formData.name}
                   onChange={catchChange}
                 />
-                <Input
-                  name="phoneNumber"
-                  label="Telefon raqami"
-                  variant="bordered"
-                  value={formData.phone}
-                  onChange={catchChange}
-                />
-                <Input
-                  name="carNumber"
-                  label="Avtomobil raqami"
-                  variant="bordered"
-                  value={formData.car_number}
-                  onChange={catchChange}
-                />
-                <Input
-                  name="key"
-                  label="Key"
-                  variant="bordered"
-                  value={formData.uuid}
-                  onChange={catchChange}
-                />
-                <Input
+                <Select
                   name="status"
-                  label="Status"
-                  variant="bordered"
+                  label="Haydovchi holati"
                   value={formData.status}
+                  defaultSelectedKeys={[formData.status]}
                   onChange={catchChange}
-                />
-                <Input
-                  name="tarif"
-                  label="Tarif"
-                  variant="bordered"
-                  value={formData.tarif}
+                >
+                  {state.map(({ stats }) => (
+                    <SelectItem key={stats} value={true}>
+                      {stats}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select
+                  name="tariff_id"
+                  label="Haydovchi Tarifi"
+                  value={formData.tariff_id}
+                  defaultSelectedKeys={[formData.tariff_id]}
                   onChange={catchChange}
-                />
+                >
+                  {tarif.map((item) => (
+                    <SelectItem key={item?.id} value={item.id}>
+                      {item?.tariff_name}
+                    </SelectItem>
+                  ))}
+                </Select>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onClick={onClose}>
@@ -232,8 +236,8 @@ export const TableWrapper = () => {
       setMeta(data.meta);
     } catch (error) {
       console.log(error.message);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -251,6 +255,29 @@ export const TableWrapper = () => {
 
   return (
     <div className="w-full flex flex-col gap-4">
+      <div className="flex justify-between flex-wrap gap-4 items-center">
+        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
+          <Input
+            startContent={<SearchIcon />}
+            classNames={{
+              input: "w-full",
+              mainWrapper: "w-full",
+            }}
+            placeholder="Search users"
+          />
+        </div>
+        <div className="flex flex-row gap-3.5 flex-wrap">
+          <AddUser refreshDrivers={fetchDriver} />
+          <Button
+            aria-label="button"
+            color="primary"
+            variant="bordered"
+            startContent={<ExportIcon />}
+          >
+            Excel faylni yuklash
+          </Button>
+        </div>
+      </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (

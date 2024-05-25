@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { AddCardtype } from "./add-carType";
 import { TableTarifWrapper } from "../table/tableTarif";
 import { TableCarWrapper } from "../table/tableCar";
 

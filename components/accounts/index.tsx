@@ -17,24 +17,6 @@ export const Accounts = () => {
   return (
     <div className="my-14 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <h3 className="text-xl font-semibold">Barcha haydovchilar</h3>
-      <div className="flex justify-between flex-wrap gap-4 items-center">
-        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
-          <Input
-          startContent={<SearchIcon />}
-            classNames={{
-              input: "w-full",
-              mainWrapper: "w-full",
-            }}
-            placeholder="Search users"
-          />
-        </div>
-        <div className="flex flex-row gap-3.5 flex-wrap">
-          <AddUser />
-          <Button aria-label="button"  color="primary" variant="bordered" startContent={<ExportIcon />}>
-            Excel faylni yuklash
-          </Button>
-        </div>
-      </div>
       <div className="max-w-[95rem] mx-auto w-full">
         <TableWrapper />
       </div>
