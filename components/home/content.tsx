@@ -1,4 +1,4 @@
-"use client";
+//@ts-nocheck
 import React from "react";
 import { TableWrapper } from "../table/table";
 
@@ -8,47 +8,50 @@ import { CardBalance } from "./card-balance1";
 
 
 export interface IStatistic{
-  tarif :string,
-  users: string,
-  narx: string
+  tariff_name :string,
+  tariff_price: number,
 }
 
 
-const statistic:IStatistic[] = [
-    {
-      tarif: "Start",
-      users: "100",
-      narx: "5000"
-    },
-    {
-      tarif: "Econom",
-      users: "180",
-      narx: "7000"
-    },
-    {
-      tarif: "Comfort",
-      users: "200",
-      narx: "9000"
-    },
-    {
-      tarif: "Business",
-      users: "50",
-      narx: "12000"
-    },
-    {
-      tarif: "Delivery",
-      users: "90",
-      narx: "15000"
-    },
-    {
-      tarif: "Load",
-      users: "300",
-      narx: "25000"
-    },
-]
 
 
-export const Content = () => (
+
+
+// const statistic:IStatistic[] = [
+//     {
+//       tarif: "Start",
+//       users: "100",
+//       narx: "5000"
+//     },
+//     {
+//       tarif: "Econom",
+//       users: "180",
+//       narx: "7000"
+//     },
+//     {
+//       tarif: "Comfort",
+//       users: "200",
+//       narx: "9000"
+//     },
+//     {
+//       tarif: "Business",
+//       users: "50",
+//       narx: "12000"
+//     },
+//     {
+//       tarif: "Delivery",
+//       users: "90",
+//       narx: "15000"
+//     },
+//     {
+//       tarif: "Load",
+//       users: "300",
+//       narx: "25000"
+//     },
+// ]
+
+
+export const Content = ({tarif}) => (
   
 
   
@@ -58,8 +61,8 @@ export const Content = () => (
         <div className="flex flex-col gap-2">
           <h3 className="text-xl font-semibold">Tariflar</h3>
           <div className="grid md:grid-cols-2 grid-cols-1 2xl:grid-cols-3 gap-5  justify-center w-full">
-          {statistic.map((item) => (
-              <CardBalance key={item.tarif} item={item} />
+          {tarif?.map((item: IStatistic | React.Key | null | undefined) => (
+              <CardBalance key={item} item={item} />
             ))}
           </div>
         </div>

@@ -14,12 +14,11 @@ export const CardBalance: React.FC<CardBalanceProps> = ({ item }) => {
         <div className="flex gap-2.5">
           <Community />
           <div className="flex flex-col">
-            <span className="text-white">{item.tarif}</span>
-            <span className="text-white text-xs">{item.users} Cars</span>
+            <span className="text-white">{item.tariff_name}</span>
           </div>
         </div>
         <div className="flex gap-2.5 py-2 items-center">
-          <span className="text-white text-xl font-semibold">{item.narx +" so'm"}</span>
+          <span className="text-white text-xl font-semibold">{item.tariff_price +" so'm"}</span>
         </div>
       </CardBody>
     </Card>
