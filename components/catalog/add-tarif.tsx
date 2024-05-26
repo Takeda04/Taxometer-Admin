@@ -83,7 +83,7 @@ export const AddTarif = ({ refreshTarifs }) => {
             />
             <Input
               name="waiting"
-              label="Tarif kutish vaqti"
+              label="Tarif kutish summasi"
               variant="bordered"
               type="number"
               value={formData.waiting}

@@ -108,7 +108,7 @@ export const TableTarifWrapper = () => {
                 />
                 <Input
                   name="price_for_expectation"
-                  label="Tarif kutish vaqti"
+                  label="Tarif kutish summasi"
                   variant="bordered"
                   type="number"
                   value={formData.price_for_expectation}
