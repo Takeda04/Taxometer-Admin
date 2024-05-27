@@ -33,6 +33,24 @@ import { AddUser } from "../accounts/add-user";
 import { ExportIcon } from "../icons/accounts/export-icon";
 import { SearchIcon } from "../icons/searchicon";
 
+
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+
 export const TableWrapper = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedUser, setSelectedUser] = useState(null);
@@ -41,6 +59,8 @@ export const TableWrapper = () => {
   const [tarif, setTarif] = useState([]);
   const [filt, setFilt] = useState("");
   const [cars, setCars] = useState([]);
+  const [search, setSearch] = useState("");
+  const debouncedSearchTerm = useDebounce(search, 500);
 
   const [formData, setFormData] = useState({
     id: null,
@@ -291,7 +311,7 @@ export const TableWrapper = () => {
 
   const fetchDriver = async () => {
     try {
-      const data = await getDrivers(currentPage, filt);
+      const data = await getDrivers(currentPage, filt, search);
       setUsers(data.data);
       setMeta(data.meta);
     } catch (error) {
@@ -303,7 +323,7 @@ export const TableWrapper = () => {
 
   useEffect(() => {
     fetchDriver();
-  }, [currentPage, filt]);
+  }, [currentPage, filt, debouncedSearchTerm]);
 
   const handlePageChange = (newpage) => {
     setCurrentPage(newpage);
@@ -338,6 +358,7 @@ export const TableWrapper = () => {
               mainWrapper: "w-full",
             }}
             placeholder="Search users"
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Select
             placeholder="Statusni tanlang"

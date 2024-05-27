@@ -93,19 +93,22 @@ export const getTarifs = async () => {
   return data;
 };
 
-export const getDrivers = async (page, status) => {
+export const getDrivers = async (page, status, search) => {
   if(status) {
     const { data } = await $host.get(`${API_URL}/drivers?per_page`, {
       params: {
         page: page,
         status: status,
+        phone: search
       }
+      
     });
     return data;
   }
   const { data } = await $host.get(`${API_URL}/drivers`, {
     params: {
       page: page,
+      phone: search
     }
   });
   return data;
