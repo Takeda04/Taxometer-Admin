@@ -13,52 +13,16 @@ export const columnsTarif = [
    { name: "ACTIONS", uid: "actions" },
  ];
 
+ export const managerCols = [
+  {name: "Manager ismi", uid: "name"},
+  {name: "Manager login", uid: "email"},
+  { name: "ACTIONS", uid: "actions" },
+ ]
+
 
  export const columnsCar = [
   { name: "Avtomobil turi", uid: "name" },
   { name: "ACTIONS", uid: "actions" },
-];
-
-export const users = [
-  {
-    id: 1,
-    name: "Olimjon Nishanaliyev",
-    phoneNumber: "+998903713153",
-    carNumber: "10 O 534 JA",
-    status: "active",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    key: "olimjon-nish",
-    tarif: "Business",
-  },
-  {
-    id: 2,
-    name: "Anvarov Bahtibek",
-    phoneNumber: "+998908557527",
-    status: "paused",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    key: "bahtibek-an",
-    tarif: "Business",
-  },
-  {
-    id: 3,
-    name: "Muhammadsodiq Nabijonov",
-    phoneNumber: "+998943943433",
-    carNumber: "10 A 505 SA",
-    status: "active",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    key: "muhammadsodiq-nab",
-    tarif: "Business",
-  },
-  {
-    id: 4,
-    name: "Mahmud Mahmudov",
-    phoneNumber: "+998943943433",
-    carNumber: "10 A 505 SA",
-    status: "paused",
-    avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    key: "mahmud-mah",
-    tarif: "Business",
-  },
 ];
 
 
@@ -74,6 +38,24 @@ export const users = [
   {
     id: 3,
     typeCar: "Altima",
+  },
+];
+
+export const managers = [
+  {
+    id: 1,
+    name: "Example name",
+    email: "email.example.com"
+  },
+  {
+    id: 2,
+    name: "Manager name",
+    email: "email.example.com"
+  },
+  {
+    id: 1,
+    name: "Example name",
+    email: "email.example.com"
   },
 ];
  

@@ -28,6 +28,10 @@ export const createDriver = async (formData) => {
   const { data } = await $host.post(`${API_URL}/drivers`, formData);
   return data;
 };
+export const createManager = async (formData) => {
+  const { data } = await $host.post(`${API_URL}/register`, formData);
+  return data;
+};
 //update
 export const updateTarif = async (formData) => {
   const { data } = await $host.put(`${API_URL}/tariffs/${formData.id}`, formData);
@@ -49,6 +53,16 @@ export const updateCar = async (formData) => {
   });
   return data;
 };
+
+export const updateManager = async (formData) => {
+  const { data } = await $host.put(`${API_URL}/users/${formData.id}`, {
+    email: formData.email,
+    name: formData.name,
+    password: formData.password,
+    password_confirmation: formData.password_confirmation
+  });
+  return data;
+};
 //delete
 export const deleteTarif = async (id) => {
   const { data } = await $host.delete(`${API_URL}/tariffs/${id}`);
@@ -64,6 +78,11 @@ export const deleteDriver = async (id) => {
   const { data } = await $host.delete(`${API_URL}/drivers/${id}`);
   return data;
 };
+
+export const deleteManager = async (id) => {
+  const { data } = await $host.delete(`${API_URL}/users/${id}`);
+  return data;
+};
 //get
 export const getTarifs = async () => {
   const { data } = await $host.get(`${API_URL}/tariffs`);
@@ -77,6 +96,11 @@ export const getDrivers = async (page) => {
 
 export const getCars = async (page) => {
   const { data } = await $host.get(`${API_URL}/carTypes`);
+  return data;
+};
+
+export const getUsers = async () => {
+  const { data } = await $host.get(`${API_URL}/users`);
   return data;
 };
 
