@@ -17,7 +17,6 @@ const Home: NextPage = () => {
       console.log(error);
     }
   };
-  console.log(tarif, "tariflar");
   
   useEffect(() => {
     getTarif();

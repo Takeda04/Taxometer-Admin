@@ -22,7 +22,12 @@ import {
 import { RenderCell } from "./render-cell";
 import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
-import { deleteDriver, getDrivers, getTarifs, updateDriver } from "@/axios/UsersAPI";
+import {
+  deleteDriver,
+  getDrivers,
+  getTarifs,
+  updateDriver,
+} from "@/axios/UsersAPI";
 import { AddUser } from "../accounts/add-user";
 import { ExportIcon } from "../icons/accounts/export-icon";
 import { SearchIcon } from "../icons/searchicon";
@@ -33,6 +38,7 @@ export const TableWrapper = () => {
   const [modalType, setModalType] = useState("");
   const [users, setUsers] = useState([]);
   const [tarif, setTarif] = useState([]);
+  const [filt, setFilt] = useState("");
 
   const [formData, setFormData] = useState({
     id: null,
@@ -43,6 +49,7 @@ export const TableWrapper = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState();
+  console.log(filt)
 
   const catchChange = (event) => {
     const { name, value } = event.target;
@@ -51,11 +58,10 @@ export const TableWrapper = () => {
       [name]: value,
     }));
   };
-  console.log(formData)
 
   const openModal = async (type, user) => {
     try {
-      const {data} = await getTarifs();
+      const { data } = await getTarifs();
       setTarif(data);
       setSelectedUser(user);
       setFormData({
@@ -66,12 +72,10 @@ export const TableWrapper = () => {
       });
       setModalType(type); // Set the modal type
       onOpen(); // Open the modal
-      console.log(user)
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(tarif, "selected");
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -231,7 +235,7 @@ export const TableWrapper = () => {
 
   const fetchDriver = async () => {
     try {
-      const data = await getDrivers(currentPage);
+      const data = await getDrivers(currentPage, filt);
       setUsers(data.data);
       setMeta(data.meta);
     } catch (error) {
@@ -243,7 +247,7 @@ export const TableWrapper = () => {
 
   useEffect(() => {
     fetchDriver();
-  }, [currentPage]);
+  }, [currentPage, filt]);
 
   const handlePageChange = (newpage) => {
     setCurrentPage(newpage);
@@ -252,11 +256,22 @@ export const TableWrapper = () => {
   if (loading) {
     return null;
   }
+  const filter = [
+    {
+      api : "",
+    },
+    {
+      api : "active",
+    },
+    {
+      api : "inactive",
+    }
+  ];
 
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex justify-between flex-wrap gap-4 items-center">
-        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
+        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap w-[350px]">
           <Input
             startContent={<SearchIcon />}
             classNames={{
@@ -265,6 +280,18 @@ export const TableWrapper = () => {
             }}
             placeholder="Search users"
           />
+          <Select 
+            placeholder="Statusni tanlang" 
+            labelPlacement="outside"
+            aria-label="asas"
+            onChange={(e) => setFilt(e.target.value)}
+          >
+            {filter.map(({api}) => (
+              <SelectItem key={api} value={api}>
+                {api}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
         <div className="flex flex-row gap-3.5 flex-wrap">
           <AddUser refreshDrivers={fetchDriver} />
@@ -310,7 +337,7 @@ export const TableWrapper = () => {
       {/* Render modal based on type */}
       {renderModalContent()}
       <Pagination
-        total={Math.ceil(meta.total / meta.per_page)}
+        total={Math.ceil(meta?.total / meta?.per_page)}
         initialPage={currentPage}
         variant={"flat"}
         onChange={(newPage) => handlePageChange(newPage)}

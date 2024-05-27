@@ -62,12 +62,10 @@ export const TableWrap = () => {
       });
       setModalType(type); // Set the modal type
       onOpen(); // Open the modal
-      console.log(user)
     } catch (error) {
       console.log(error);
     }
-  };
-  console.log(tarif, "selected");
+  }
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -283,7 +281,7 @@ export const TableWrap = () => {
       {/* Render modal based on type */}
       {renderModalContent()}
       <Pagination
-        total={Math.ceil(meta.total / meta.per_page)}
+        total={Math.ceil(meta?.total / meta?.per_page)}
         initialPage={currentPage}
         variant={"flat"}
         onChange={(newPage) => handlePageChange(newPage)}

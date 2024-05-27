@@ -87,9 +87,8 @@ export const AddUser = ({refreshDrivers}) => {
       const car = await getCars();
       setTarifOptions(data);
       setCarTypes(car.data);
-      console.log(data, "data");
     } catch (error) {
-      // console.log(error.message);
+      console.log(error.message);
     }
   };
 

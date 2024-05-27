@@ -52,7 +52,6 @@ export const TableCarWrapper = () => {
     });
     setModalType(type);
     onOpen();
-    console.log(car, "selected");
   };
 
   const handleUpdate = async (e) => {
@@ -60,7 +59,6 @@ export const TableCarWrapper = () => {
 
     try {
       await updateCar(formData);
-      console.log(formData);
       await fetchData();
       toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
     } catch (error) {
@@ -74,7 +72,6 @@ export const TableCarWrapper = () => {
     try {
       await deleteCar(id);
       await fetchData();
-      console.log(id);
       toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
     } catch (error) {
       toastError("error");
@@ -161,7 +158,6 @@ export const TableCarWrapper = () => {
     try {
       const {data} = await getCars();
       setCars(data);
-      console.log(data, "carsss");
     } catch (error) {
       console.log(error);
     } finally {
@@ -173,10 +169,6 @@ export const TableCarWrapper = () => {
     fetchData();
   }, [currentPage]);
 
-  const handlePageChange = (newpage) => {
-    setCurrentPage(newpage);
-    console.log(newpage);
-  };
 
   if (loading) {
     return null;
@@ -214,12 +206,6 @@ export const TableCarWrapper = () => {
         </TableBody>
       </Table>
       {renderModalContent()}
-      {/* <Pagination
-        total={Math.ceil(data)}
-        initialPage={currentPage}
-        variant={"flat"}
-        onChange={(newPage) => handlePageChange(newPage)}
-      /> */}
     </div>
   );
 };

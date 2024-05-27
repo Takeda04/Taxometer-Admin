@@ -51,8 +51,6 @@ import { RenderManagerCell } from "./renderMan-cell";
         email: manager.email,
       });
       setModalType(type);
-      console.log(manager.id, "id");
-      
       onOpen();
     };
   
@@ -159,8 +157,6 @@ import { RenderManagerCell } from "./renderMan-cell";
     const getManager = async () => {
       try {
         const {users} = await getUsers();
-        console.log(users, "man");
-        
         setManager(users);
       } catch (error) {
         console.log(error);
@@ -170,8 +166,6 @@ import { RenderManagerCell } from "./renderMan-cell";
     useEffect(() => {
         getManager();
     }, []);
-
-    console.log(manager, "managers");
     
     
   

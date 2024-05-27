@@ -53,8 +53,6 @@ export const TableTarifWrapper = () => {
       expectation: tarif.expectation
     });
     setModalType(type);
-    console.log(tarif.id, "id");
-    
     onOpen();
   };
 

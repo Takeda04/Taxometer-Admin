@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshUser } from "./UsersAPI";
 
-export const API_URL = "http://185.196.214.31:82/api";
+export const API_URL = "https://185.196.214.31/api";
 
 
 const $host = axios.create({
