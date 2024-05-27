@@ -60,9 +60,9 @@ export const TableCarWrapper = () => {
     try {
       await updateCar(formData);
       await fetchData();
-      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
+      toastSuccess("Muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError(error.message);
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }
@@ -72,9 +72,9 @@ export const TableCarWrapper = () => {
     try {
       await deleteCar(id);
       await fetchData();
-      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
+      toastSuccess("Muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }

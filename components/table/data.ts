@@ -1,9 +1,12 @@
 export const columns = [
   { name: "Ism", uid: "name" },
   { name: "Ta'rif", uid: "tarif" },
+  { name: "Avtomobil raqami", uid: "car_number" },
   { name: "STATUS", uid: "status" },
   { name: "ACTIONS", uid: "actions" },
 ];
+
+
 
 export const columnsTarif = [
    { name: "Ta'rif turi", uid: "tariff_name" },

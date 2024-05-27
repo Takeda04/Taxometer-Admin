@@ -78,6 +78,14 @@ export const AddUser = ({refreshDrivers}) => {
       toastError(error.message);
     } finally {
       onClose();
+      setFormData({
+        name: "",
+        phone: "",
+        driver_license: "",
+        car_number: "",
+        tariff_id: undefined,
+        car_type_id: undefined,
+      })
     }
   };
 

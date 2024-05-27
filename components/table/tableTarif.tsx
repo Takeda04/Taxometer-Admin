@@ -60,10 +60,10 @@ export const TableTarifWrapper = () => {
     e.preventDefault();
     try {
       await updateTarif(formData);
-      toastSuccess("Tarif ma'lumotlari muaffaqiyatli yangilandi");
+      toastSuccess("Muaffaqiyatli yangilandi");
       getTarif(); // Refresh the tariffs list
     } catch (error) {
-      toastError(error.message);
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }
@@ -72,10 +72,10 @@ export const TableTarifWrapper = () => {
   const handleDelete = async (id) => {
     try {
       await deleteTarif(id);
-      toastSuccess("Tarif muaffaqiyatli o'chirildi");
+      toastSuccess("Muaffaqiyatli o'chirildi");
       getTarif(); // Refresh the tariffs list
     } catch (error) {
-      toastError("Error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }

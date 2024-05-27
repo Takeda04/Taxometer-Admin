@@ -4,21 +4,20 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Input, Button, Link } from "@nextui-org/react";
 import { toastError } from "@/components/toast";
 import { signIn } from "../../axios/UsersAPI";
-
-
-
-
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 interface ErrorWithMessage {
   message: string;
 }
-
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const catchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -64,6 +63,20 @@ const Login = () => {
               />
               <Input
                 name="password"
+                endContent={
+                  <button
+                    className="absolute inset-y-0 right-0 flex items-center px-3 focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                  >
+                    {isVisible ? (
+                      <VisibilityIcon className="text-default-400 pointer-events-none" />
+                    ) : (
+                      <VisibilityOffIcon className="text-default-400 pointer-events-none" />
+                    )}
+                  </button>
+                }
+                type={isVisible ? "text" : "password"}
                 label="Parolingiz"
                 variant="bordered"
                 value={formData.password}
@@ -85,4 +98,4 @@ const Login = () => {
   );
 };
 
-export default Login
+export default Login;

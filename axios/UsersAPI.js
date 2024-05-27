@@ -40,9 +40,13 @@ export const updateTarif = async (formData) => {
 
 export const updateDriver = async (formData) => {
   const { data } = await $host.put(`${API_URL}/drivers/${formData.id}`, {
-    status: formData.status,
     name: formData.name,
-    tariff_id: formData.tariff_id 
+    phone: formData.phone,
+    driver_license: formData.driver_license,
+    car_number: formData.car_number,
+    status: formData.status,
+    tariff_id: formData.tariff_id,
+    car_type_id: formData.car_type
   });
   return data;
 };
@@ -91,10 +95,10 @@ export const getTarifs = async () => {
 
 export const getDrivers = async (page, status) => {
   if(status) {
-    const { data } = await $host.get(`${API_URL}/drivers`, {
+    const { data } = await $host.get(`${API_URL}/drivers?per_page`, {
       params: {
         page: page,
-        status: status
+        status: status,
       }
     });
     return data;

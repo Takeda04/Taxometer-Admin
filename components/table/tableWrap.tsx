@@ -73,9 +73,9 @@ export const TableWrap = () => {
     try {
       await updateDriver(formData);
       fetchDriver();
-      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
+      toastSuccess("Muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }
@@ -84,9 +84,9 @@ export const TableWrap = () => {
     try {
       await deleteDriver(id);
       fetchDriver();
-      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
+      toastSuccess("Muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }

@@ -36,6 +36,14 @@ export const RenderCell = ({  user, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
+      case "car_number":
+      return (
+        <div>
+          <div>
+            <span>{user?.car_number}</span>
+          </div>
+        </div>
+      );
     case "status":
       return (
         <Chip

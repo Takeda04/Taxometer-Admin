@@ -58,10 +58,10 @@ import { RenderManagerCell } from "./renderMan-cell";
       e.preventDefault();
       try {
         await updateManager(formData);
-        toastSuccess("Manager ma'lumotlari muaffaqiyatli yangilandi");
+        toastSuccess("Muaffaqiyatli yangilandi");
         getManager(); // Refresh the tariffs list
       } catch (error) {
-        toastError(error.message);
+        toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
       } finally {
         onClose();
       }
@@ -70,10 +70,10 @@ import { RenderManagerCell } from "./renderMan-cell";
     const handleDelete = async (id) => {
       try {
         await deleteManager(id);
-        toastSuccess("Manager muaffaqiyatli o'chirildi");
+        toastSuccess("Muaffaqiyatli o'chirildi");
         getManager(); // Refresh the tariffs list
       } catch (error) {
-        toastError("Error");
+        toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
       } finally {
         onClose();
       }

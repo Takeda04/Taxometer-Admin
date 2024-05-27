@@ -24,6 +24,7 @@ import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
 import {
   deleteDriver,
+  getCars,
   getDrivers,
   getTarifs,
   updateDriver,
@@ -39,17 +40,21 @@ export const TableWrapper = () => {
   const [users, setUsers] = useState([]);
   const [tarif, setTarif] = useState([]);
   const [filt, setFilt] = useState("");
+  const [cars, setCars] = useState([]);
 
   const [formData, setFormData] = useState({
     id: null,
     name: "",
+    phone: "",
+    driver_license: "",
+    car_number: "",
     status: "",
     tariff_id: null,
+    car_type: null,
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState();
-  console.log(filt)
 
   const catchChange = (event) => {
     const { name, value } = event.target;
@@ -62,16 +67,23 @@ export const TableWrapper = () => {
   const openModal = async (type, user) => {
     try {
       const { data } = await getTarifs();
+      const cars = await getCars();
       setTarif(data);
+      setCars(cars.data);
       setSelectedUser(user);
       setFormData({
         id: user.id,
         name: user.name,
+        phone: user.phone,
+        driver_license: user.driver_license,
+        car_number: user.car_number,
         status: user.status,
         tariff_id: user.tariff.id,
+        car_type: user.car_type.id,
       });
       setModalType(type); // Set the modal type
       onOpen(); // Open the modal
+      console.log(cars.data, "modal");
     } catch (error) {
       console.log(error);
     }
@@ -83,20 +95,30 @@ export const TableWrapper = () => {
     try {
       await updateDriver(formData);
       fetchDriver();
-      toastSuccess("Foydalanuvchi ma'lumotlari muaffaqiyatli yangilandi");
+      toastSuccess("Muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
+      setFormData({
+        id: null,
+        name: "",
+        phone: "",
+        driver_license: "",
+        car_number: "",
+        status: "",
+        tariff_id: null,
+        car_type: null,
+      });
     }
   };
   const handleDelete = async (id) => {
     try {
       await deleteDriver(id);
       fetchDriver();
-      toastSuccess("Foydalanuvchi muaffaqiyatli o'chirildi");
+      toastSuccess("Muaffaqiyatli o'chirildi");
     } catch (error) {
-      toastError("error");
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
     }
@@ -164,6 +186,27 @@ export const TableWrapper = () => {
                   value={formData.name}
                   onChange={catchChange}
                 />
+                <Input
+                  name="phone"
+                  label="Telefon raqam"
+                  variant="bordered"
+                  value={formData.phone}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="driver_license"
+                  label="Haydovchilik guvohnomasi"
+                  variant="bordered"
+                  value={formData.driver_license}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="car_number"
+                  label="Avtomobil raqami"
+                  variant="bordered"
+                  value={formData.car_number}
+                  onChange={catchChange}
+                />
                 <Select
                   name="status"
                   label="Haydovchi holati"
@@ -187,6 +230,19 @@ export const TableWrapper = () => {
                   {tarif.map((item) => (
                     <SelectItem key={item?.id} value={item.id}>
                       {item?.tariff_name}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select
+                  name="car_type"
+                  label="Avtomobil turi"
+                  value={formData.status}
+                  defaultSelectedKeys={[formData.car_type]}
+                  onChange={catchChange}
+                >
+                  {cars.map(({ id, name }) => (
+                    <SelectItem key={id} value={true}>
+                      {name}
                     </SelectItem>
                   ))}
                 </Select>
@@ -258,14 +314,17 @@ export const TableWrapper = () => {
   }
   const filter = [
     {
-      api : "",
+      name: "Barchasi",
+      api: "",
     },
     {
-      api : "active",
+      name: "Active",
+      api: "active",
     },
     {
-      api : "inactive",
-    }
+      name: "Inactive",
+      api: "inactive",
+    },
   ];
 
   return (
@@ -280,15 +339,15 @@ export const TableWrapper = () => {
             }}
             placeholder="Search users"
           />
-          <Select 
-            placeholder="Statusni tanlang" 
+          <Select
+            placeholder="Statusni tanlang"
             labelPlacement="outside"
             aria-label="asas"
             onChange={(e) => setFilt(e.target.value)}
           >
-            {filter.map(({api}) => (
+            {filter.map(({ name, api }) => (
               <SelectItem key={api} value={api}>
-                {api}
+                {name}
               </SelectItem>
             ))}
           </Select>
