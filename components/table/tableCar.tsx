@@ -159,7 +159,7 @@ export const TableCarWrapper = () => {
       const {data} = await getCars();
       setCars(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }

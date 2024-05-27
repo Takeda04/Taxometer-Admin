@@ -34,7 +34,6 @@ export const AddCardtype = ({ refreshCars }) => {
         await createCar(formData)
         toastSuccess("Muaffaqaiyatli yaratildi");
         await refreshCars();
-        console.log(formData);
       } else {
         throw new Error("Ma'lumotlar to'liq emas");
       }

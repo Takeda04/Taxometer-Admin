@@ -159,7 +159,7 @@ import { RenderManagerCell } from "./renderMan-cell";
         const {users} = await getUsers();
         setManager(users);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
   

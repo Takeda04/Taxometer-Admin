@@ -103,7 +103,6 @@ export const TableWrapper = () => {
       });
       setModalType(type); // Set the modal type
       onOpen(); // Open the modal
-      console.log(cars.data, "modal");
     } catch (error) {
       console.log(error);
     }
@@ -315,7 +314,7 @@ export const TableWrapper = () => {
       setUsers(data.data);
       setMeta(data.meta);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     } finally {
       setLoading(false);
     }

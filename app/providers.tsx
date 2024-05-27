@@ -53,7 +53,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
             sessionStorage.setItem("accessToken", token);
           }
         } catch (error) {
-          console.error("Failed to refresh token:", error);
+          // console.error("Failed to refresh token:", error);
         }
       }
 
