@@ -58,11 +58,13 @@ const Login = () => {
                 name="email"
                 label="Emailingiz"
                 variant="bordered"
+                autoComplete="off"
                 value={formData.email}
                 onChange={catchChange}
               />
               <Input
                 name="password"
+                autoComplete="off"
                 endContent={
                   <button
                     className="absolute inset-y-0 right-0 flex items-center px-3 focus:outline-none"

@@ -87,6 +87,7 @@ export const AddManager = ({ refreshManagers }) => {
               label="Manager ismi"
               variant="bordered"
               value={formData.name}
+              autoComplete="off"
               onChange={catchChange}
             />
             <Input
@@ -94,12 +95,14 @@ export const AddManager = ({ refreshManagers }) => {
               label="Login"
               variant="bordered"
               type="email"
+              autoComplete="off"
               value={formData.email}
               onChange={catchChange}
             />
             <Input
               name="password"
               label="Parol"
+              autoComplete="off"
               variant="bordered"
               type={isVisible ? "text" : "password"}
               value={formData.password}
