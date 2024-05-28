@@ -200,7 +200,7 @@ export const TableWrap = () => {
                   defaultSelectedKeys={[formData.status]}
                   onChange={catchChange}
                 >
-                  {state.map(({ stats }) => (
+                  {state?.map(({ stats }) => (
                     <SelectItem key={stats} value={true}>
                       {stats}
                     </SelectItem>
@@ -226,7 +226,7 @@ export const TableWrap = () => {
                   defaultSelectedKeys={[formData.car_type]}
                   onChange={catchChange}
                 >
-                  {cars.map(({ id, name }) => (
+                  {cars?.map(({ id, name }) => (
                     <SelectItem key={id} value={true}>
                       {name}
                     </SelectItem>
