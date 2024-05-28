@@ -22,7 +22,7 @@ import {
 import { RenderCell } from "./render-cell";
 import { columns } from "./data";
 import { toastError, toastSuccess } from "../toast";
-import { deleteDriver, getDrivers, getTarifs, updateDriver } from "@/axios/UsersAPI";
+import { deleteDriver, getDrivers, getTarifs, updateDriver,  getCars, } from "@/axios/UsersAPI";
 
 export const TableWrap = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,6 +30,7 @@ export const TableWrap = () => {
   const [modalType, setModalType] = useState("");
   const [users, setUsers] = useState([]);
   const [tarif, setTarif] = useState([]);
+  const [cars, setCars] = useState([]);
 
   const [formData, setFormData] = useState({
     id: null,
@@ -56,7 +57,9 @@ export const TableWrap = () => {
   const openModal = async (type, user) => {
     try {
       const {data} = await getTarifs();
+      const cars = await getCars();
       setTarif(data);
+      setCars(cars.data);
       setSelectedUser(user);
       setFormData({
         id: user.id,
