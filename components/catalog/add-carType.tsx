@@ -41,6 +41,9 @@ export const AddCardtype = ({ refreshCars }) => {
       toastError(error.message);
     }
     onClose();
+    setFormData({
+      name: ""
+    })
   };
 
   return (

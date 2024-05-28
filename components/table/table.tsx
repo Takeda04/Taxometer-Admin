@@ -356,7 +356,7 @@ export const TableWrapper = () => {
               input: "w-full",
               mainWrapper: "w-full",
             }}
-            placeholder="Search users"
+            placeholder="Telefon raqam"
             onChange={(e) => setSearch(e.target.value)}
           />
           <Select

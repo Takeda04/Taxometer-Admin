@@ -20,10 +20,10 @@ export const AddTarif = ({ refreshTarifs }) => {
     tarif: "",
     price: "",
     time: "",
-    waiting: ""
+    waiting: "",
   });
 
-  const catchChange = (event: { target: { name: any; value: any; }; }) => {
+  const catchChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -31,11 +31,16 @@ export const AddTarif = ({ refreshTarifs }) => {
     }));
   };
 
-  const handleCreate = async (e: { preventDefault: () => void; }) => {
+  const handleCreate = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
-      if (formData.tarif !== "" && formData.price !== "" && formData.time !== "" && formData.waiting !== "") {
+      if (
+        formData.tarif !== "" &&
+        formData.price !== "" &&
+        formData.time !== "" &&
+        formData.waiting !== ""
+      ) {
         await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
         refreshTarifs(); // Refresh the tariffs list
@@ -43,16 +48,22 @@ export const AddTarif = ({ refreshTarifs }) => {
         throw new Error("Ma'lumotlar to'liq emas");
       }
     } catch (error) {
-      // toastError(error.message);
+      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
     } finally {
       onClose();
+      setFormData({
+        tarif: "",
+        price: "",
+        time: "",
+        waiting: "",
+      });
     }
   };
 
   return (
     <div>
       <Button
-        aria-label="button" 
+        aria-label="button"
         onClick={onOpen}
         color="primary"
         variant="bordered"
@@ -99,10 +110,20 @@ export const AddTarif = ({ refreshTarifs }) => {
             />
           </ModalBody>
           <ModalFooter>
-            <Button aria-label="button" color="danger" variant="flat" onClick={onClose}>
+            <Button
+              aria-label="button"
+              color="danger"
+              variant="flat"
+              onClick={onClose}
+            >
               Yopish
             </Button>
-            <Button aria-label="button" color="primary" variant="flat" onClick={handleCreate}>
+            <Button
+              aria-label="button"
+              color="primary"
+              variant="flat"
+              onClick={handleCreate}
+            >
               Tasdiqlash
             </Button>
           </ModalFooter>
