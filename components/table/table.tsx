@@ -374,14 +374,7 @@ export const TableWrapper = () => {
         </div>
         <div className="flex flex-row gap-3.5 flex-wrap">
           <AddUser refreshDrivers={fetchDriver} />
-          <Button
-            aria-label="button"
-            color="primary"
-            variant="bordered"
-            startContent={<ExportIcon />}
-          >
-            Excel faylni yuklash
-          </Button>
+
         </div>
       </div>
       <Table aria-label="Example table with custom cells">
