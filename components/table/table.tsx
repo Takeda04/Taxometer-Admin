@@ -32,6 +32,8 @@ import {
 import { AddUser } from "../accounts/add-user";
 import { ExportIcon } from "../icons/accounts/export-icon";
 import { SearchIcon } from "../icons/searchicon";
+import { AxiosError } from "axios";
+import { parseError } from "@/util/parseError";
 
 
 function useDebounce(value, delay) {
@@ -72,6 +74,7 @@ export const TableWrapper = () => {
     tariff_id: null,
     car_type: null,
   });
+
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState();
@@ -101,8 +104,8 @@ export const TableWrapper = () => {
         tariff_id: user.tariff.id,
         car_type: user.car_type.id,
       });
-      setModalType(type); // Set the modal type
-      onOpen(); // Open the modal
+      setModalType(type);
+      onOpen();
     } catch (error) {
       console.log(error);
     }
@@ -110,13 +113,29 @@ export const TableWrapper = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const partiallyData = {
+      ...formData
+    };
+    if(formData.driver_license === selectedUser.driver_license) {
+      delete partiallyData.driver_license;
+    }
+    if(formData.car_number === selectedUser.car_number) {
+      delete partiallyData.car_number;
+    }
 
     try {
-      await updateDriver(formData);
+      await updateDriver(partiallyData);
       fetchDriver();
       toastSuccess("Muaffaqiyatli yangilandi");
     } catch (error) {
-      toastError("Kechirasiz, sizda buning uchun ruhsat yo'q");
+      if(error instanceof AxiosError) {
+        const errors = parseError(error.response?.data.data);
+        errors.forEach((err) => {
+          toastError(err);
+        })
+        return;
+      }
+      toastError(error.message);
     } finally {
       onClose();
       setFormData({
@@ -131,6 +150,7 @@ export const TableWrapper = () => {
       });
     }
   };
+
   const handleDelete = async (id) => {
     try {
       await deleteDriver(id);

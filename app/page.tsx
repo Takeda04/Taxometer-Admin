@@ -7,8 +7,6 @@ import { getTarifs } from "@/axios/UsersAPI";
 const Home: NextPage = () => {
   const [tarif, setTarifs] = useState();
 
-
-
   const getTarif = async () => {
     try {
       const { data } = await getTarifs();
@@ -21,6 +19,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     getTarif();
   }, [])
+  
   return <Content tarif={tarif}/>;
 };
 

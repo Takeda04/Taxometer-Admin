@@ -8,6 +8,7 @@ import { Layout } from "../components/layout/layout";
 import { Toaster } from "react-hot-toast";
 import { refreshUser } from "@/axios/UsersAPI";
 import Login from "./login/page";
+import AppLoading from "@/components/loading/loading";
 
 
 export interface ProvidersProps {
@@ -39,6 +40,7 @@ const getStoredToken = (): string | null => {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -58,6 +60,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       }
 
       setIsAuthenticated(!!token);
+      setLoading(false);
     };
 
     checkAuthentication();
@@ -70,6 +73,10 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       setIsAuthenticated(true);
     }
   };
+
+  if(loading) {
+    return <AppLoading/>;
+  }
 
   if (isAuthenticated) {
     return (
