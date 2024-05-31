@@ -13,6 +13,7 @@ export const createTarif = async (formData) => {
   const { data } = await $host.post(`${API_URL}/tariffs`, {
     tariff_name: formData.tarif,
     tariff_price: formData.price,
+    call_price: formData.call_price,
     expectation: formData.time,
     price_for_expectation: formData.waiting
   });

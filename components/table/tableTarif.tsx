@@ -31,6 +31,7 @@ export const TableTarifWrapper = () => {
     id: "",
     tariff_name: "",
     tariff_price: "",
+    call_price: "",
     price_for_expectation: "",
     expectation: ""
   });
@@ -49,6 +50,7 @@ export const TableTarifWrapper = () => {
       id: tarif.id,
       tariff_name: tarif.tariff_name,
       tariff_price: tarif.tariff_price,
+      call_price: tarif.call_price,
       price_for_expectation: tarif.price_for_expectation,
       expectation: tarif.expectation
     });
@@ -102,6 +104,14 @@ export const TableTarifWrapper = () => {
                   variant="bordered"
                   type="number"
                   value={formData.tariff_price}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="call_price"
+                  label="Avtomobil chaqirish narxi"
+                  variant="bordered"
+                  type="number"
+                  value={formData.call_price}
                   onChange={catchChange}
                 />
                 <Input

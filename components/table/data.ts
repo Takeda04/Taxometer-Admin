@@ -11,6 +11,7 @@ export const columns = [
 export const columnsTarif = [
    { name: "Ta'rif turi", uid: "tariff_name" },
    { name: "Ta'rif narxi", uid: "tariff_price" },
+   { name: "Avtomobil chaqiruv narxi", uid: "call_price" },
    { name: "Ta'rif kutish narxi", uid: "price_for_expectation" },
    { name: "Ta'rif tekin kutish vaqti", uid: "expectation" },
    { name: "ACTIONS", uid: "actions" },

@@ -31,6 +31,15 @@ export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
+      case "call_price":
+      return (
+        <div>
+          <div>
+            <span>{cellValue}</span>
+          </div>
+        </div>
+      );
+      
       case "price_for_expectation":
       return (
         <div>

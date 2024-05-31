@@ -19,6 +19,7 @@ export const AddTarif = ({ refreshTarifs }) => {
   const [formData, setFormData] = useState({
     tarif: "",
     price: "",
+    call_price: "",
     time: "",
     waiting: "",
   });
@@ -39,7 +40,8 @@ export const AddTarif = ({ refreshTarifs }) => {
         formData.tarif !== "" &&
         formData.price !== "" &&
         formData.time !== "" &&
-        formData.waiting !== ""
+        formData.waiting !== "" &&
+        formData.call_price !== ""
       ) {
         await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
@@ -54,6 +56,7 @@ export const AddTarif = ({ refreshTarifs }) => {
       setFormData({
         tarif: "",
         price: "",
+        call_price: "",
         time: "",
         waiting: "",
       });
@@ -90,6 +93,14 @@ export const AddTarif = ({ refreshTarifs }) => {
               variant="bordered"
               type="number"
               value={formData.price}
+              onChange={catchChange}
+            />
+            <Input
+              name="call_price"
+              label="Chaqiruv narxi"
+              variant="bordered"
+              type="number"
+              value={formData.call_price}
               onChange={catchChange}
             />
             <Input
