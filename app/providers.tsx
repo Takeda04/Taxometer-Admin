@@ -66,13 +66,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     checkAuthentication();
   }, []);
 
-  const handleLogin = (accessToken: string | null) => {
-    if (accessToken) {
-      localStorage.setItem("accessToken", accessToken);
-      sessionStorage.setItem("accessToken", accessToken);
-      setIsAuthenticated(true);
-    }
-  };
 
   if(loading) {
     return <AppLoading/>;
