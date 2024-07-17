@@ -52,6 +52,7 @@ export const TableTarifWrapper = () => {
       tariff_price: tarif.tariff_price,
       call_price: tarif.call_price,
       price_for_expectation: tarif.price_for_expectation,
+      tariff_min_price: tarif.tariff_min_price,
       expectation: tarif.expectation
     });
     setModalType(type);
@@ -120,6 +121,14 @@ export const TableTarifWrapper = () => {
                   variant="bordered"
                   type="number"
                   value={formData.price_for_expectation}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="tariff_min_price"
+                  label="1 km gacha ta'rif narxi"
+                  variant="bordered"
+                  type="number"
+                  value={formData.tariff_min_price}
                   onChange={catchChange}
                 />
                 <Input

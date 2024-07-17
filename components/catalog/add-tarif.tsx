@@ -22,6 +22,7 @@ export const AddTarif = ({ refreshTarifs }) => {
     call_price: "",
     time: "",
     waiting: "",
+    tariff_min_price: ""
   });
 
   const catchChange = (event: { target: { name: any; value: any } }) => {
@@ -41,7 +42,8 @@ export const AddTarif = ({ refreshTarifs }) => {
         formData.price !== "" &&
         formData.time !== "" &&
         formData.waiting !== "" &&
-        formData.call_price !== ""
+        formData.call_price !== "" &&
+        formData.tariff_min_price !== ""
       ) {
         await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
@@ -59,6 +61,7 @@ export const AddTarif = ({ refreshTarifs }) => {
         call_price: "",
         time: "",
         waiting: "",
+        tariff_min_price: ""
       });
     }
   };
@@ -117,6 +120,14 @@ export const AddTarif = ({ refreshTarifs }) => {
               variant="bordered"
               type="number"
               value={formData.time}
+              onChange={catchChange}
+            />
+            <Input
+              name="tariff_min_price"
+              label="1 km gacha ta'rif narxi"
+              variant="bordered"
+              type="number"
+              value={formData.tariff_min_price}
               onChange={catchChange}
             />
           </ModalBody>
