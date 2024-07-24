@@ -22,7 +22,8 @@ export const AddTarif = ({ refreshTarifs }) => {
     call_price: "",
     time: "",
     waiting: "",
-    tariff_min_price: ""
+    tariff_min_price: "",
+    tariff_min_km: "",
   });
 
   const catchChange = (event: { target: { name: any; value: any } }) => {
@@ -43,7 +44,8 @@ export const AddTarif = ({ refreshTarifs }) => {
         formData.time !== "" &&
         formData.waiting !== "" &&
         formData.call_price !== "" &&
-        formData.tariff_min_price !== ""
+        formData.tariff_min_price !== "" && 
+        formData.tariff_min_km !== ""
       ) {
         await createTarif(formData);
         toastSuccess("Muaffaqiyatli yaratildi");
@@ -61,7 +63,8 @@ export const AddTarif = ({ refreshTarifs }) => {
         call_price: "",
         time: "",
         waiting: "",
-        tariff_min_price: ""
+        tariff_min_price: "",
+        tariff_min_km: ""
       });
     }
   };
@@ -128,6 +131,14 @@ export const AddTarif = ({ refreshTarifs }) => {
               variant="bordered"
               type="number"
               value={formData.tariff_min_price}
+              onChange={catchChange}
+            />
+            <Input
+              name="tariff_min_km"
+              label="Minimal kilometer (km)"
+              variant="bordered"
+              type="number"
+              value={formData.tariff_min_km}
               onChange={catchChange}
             />
           </ModalBody>

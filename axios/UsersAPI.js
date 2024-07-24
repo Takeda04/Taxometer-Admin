@@ -15,7 +15,9 @@ export const createTarif = async (formData) => {
     tariff_price: formData.price,
     call_price: formData.call_price,
     expectation: formData.time,
-    price_for_expectation: formData.waiting
+    price_for_expectation: formData.waiting,
+    tariff_min_price: formData.tariff_min_price,
+    tariff_min_km: formData.tariff_min_km,
   });
   return data;
 };

@@ -56,6 +56,14 @@ export const RenderTarifCell = ({ tarif, columnKey, openModal }: Props) => {
           </div>
         </div>
       );
+      case "tariff_min_km":
+      return (
+        <div>
+          <div>
+            <span>{cellValue}</span>
+          </div>
+        </div>
+      );
       case "expectation":
         return (
           <div>

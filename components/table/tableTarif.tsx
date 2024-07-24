@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { columnsTarif } from "./data";
 import { RenderTarifCell } from "./renderTarif-cell";
 import { toastError, toastSuccess } from "../toast";
-import { createTarif, deleteTarif, getTarifs, updateTarif } from "@/axios/UsersAPI";
+import { deleteTarif, getTarifs, updateTarif } from "@/axios/UsersAPI";
 import { AddTarif } from "../catalog/add-tarif";
 
 export const TableTarifWrapper = () => {
@@ -33,6 +33,7 @@ export const TableTarifWrapper = () => {
     tariff_price: "",
     call_price: "",
     price_for_expectation: "",
+    tariff_min_km: "",
     expectation: ""
   });
 
@@ -53,6 +54,7 @@ export const TableTarifWrapper = () => {
       call_price: tarif.call_price,
       price_for_expectation: tarif.price_for_expectation,
       tariff_min_price: tarif.tariff_min_price,
+      tariff_min_km: tarif.tariff_min_km,
       expectation: tarif.expectation
     });
     setModalType(type);
@@ -129,6 +131,14 @@ export const TableTarifWrapper = () => {
                   variant="bordered"
                   type="number"
                   value={formData.tariff_min_price}
+                  onChange={catchChange}
+                />
+                <Input
+                  name="tariff_min_km"
+                  label="Minimal kilometer"
+                  variant="bordered"
+                  type="number"
+                  value={formData.tariff_min_km}
                   onChange={catchChange}
                 />
                 <Input
