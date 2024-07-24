@@ -127,7 +127,7 @@ export const AddTarif = ({ refreshTarifs }) => {
             />
             <Input
               name="tariff_min_price"
-              label="1 km gacha ta'rif narxi"
+              label="Min km gacha ta'rif narxi"
               variant="bordered"
               type="number"
               value={formData.tariff_min_price}

@@ -13,7 +13,7 @@ export const columnsTarif = [
    { name: "Ta'rif narxi", uid: "tariff_price" },
    { name: "Avtomobil chaqiruv narxi", uid: "call_price" },
    { name: "Ta'rif kutish narxi", uid: "price_for_expectation" },
-   { name: "1 km gacha ta'rif narxi", uid: "tariff_min_price" },
+   { name: "Min km gacha ta'rif narxi", uid: "tariff_min_price" },
    { name: "Minimal kilometer", uid: "tariff_min_km" },
    { name: "Ta'rif tekin kutish vaqti", uid: "expectation" },
    { name: "ACTIONS", uid: "actions" },
